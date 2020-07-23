@@ -1,10 +1,25 @@
 @import "https://fonts.googleapis.com/css2?family=Amiri&display=swap";
+@import "https://fonts.googleapis.com/css2?family=Playfair+Display&display=swap";
+
+* {
+  box-sizing: content-box;
+}
+*:before,
+*:after {
+  box-sizing: content-box;
+}
 
 body, html {
   background: #fafafa;
   color: #333333;
   font-family: 'Amiri', serif;
   height: 100%;
+}
+
+
+
+.bold {
+  font-weight: 600;
 }
 
 .vl {
@@ -14,13 +29,18 @@ body, html {
   margin-bottom: 10px;
 }
 
+.vl2 {
+  border-right: 1px solid rgba(95, 76, 76, 0.2);
+  margin-left: 25px;
+}
+
 .signature {
   color: #bababa;
   padding: 50px;
 }
 
 .content-section {
-  background: #fffefc;
+  background: rgba(255, 254, 252, 0.8);
   padding: 10px 20px;
   border: 1px solid #dddddd;
   border-radius: 3px;
