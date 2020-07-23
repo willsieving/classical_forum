@@ -16,7 +16,13 @@ body, html {
   height: 100%;
 }
 
+.event-text {
+   color: #024863;
+}
 
+.nounderline {
+  text-decoration: none !important
+}
 
 .bold {
   font-weight: 600;
@@ -31,7 +37,7 @@ body, html {
 
 .vl2 {
   border-right: 1px solid rgba(95, 76, 76, 0.2);
-  margin-left: 25px;
+  margin-left: 5px;
 }
 
 .signature {
