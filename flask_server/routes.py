@@ -10,3 +10,7 @@ def home():
 @main.route('/discussion')
 def discussion():
     return render_template('discussion.html')
+
+@main.route('/events')
+def upcoming_events():
+    return render_template('events.html')

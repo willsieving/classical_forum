@@ -1,0 +1,33 @@
+{% extends "layout.html" %}
+{% block start_background_div %}<div class="bg1">{% endblock start_background_div %}
+{% block end_background_div %}</div>{% endblock end_background_div %}
+
+{% block content %}
+<h2 class="text-center event-text" style="margin-top: 50px">Upcoming Events</h2>
+<div class="col-md-2">
+  <h5 class="text-center">Year</h5>
+  <a class="list-group btn-group btn-group-toggle" data-toggle="buttons">
+    <div class="hl"></div>
+    <label class="btn btn-events rounded-left" style="margin-left: -1px">
+        <input type="radio" name="event_year" id="2020" autocomplete="off"> 2020
+    </label>
+    <div style="padding-bottom: 0px"></div>
+    <div class="hl"></div>
+    <label class="btn btn-events rounded-left">
+        <input type="radio" name="event_year" id="2019" autocomplete="off"> 2019
+    </label>
+    <div style="padding-bottom: 0px"></div>
+    <div class="hl"></div>
+    <label class="btn btn-events rounded-left">
+        <input type="radio" name="event_year" id="2018" autocomplete="off"> 2018
+    </label>
+    <div style="padding-bottom: 0px"></div>
+    <div class="hl"></div>
+    <label class="btn btn-events rounded-left">
+        <input type="radio" name="event_year" id="2017" autocomplete="off"> 2017
+    </label>
+
+  </a>
+</div>
+
+{% endblock content %}
