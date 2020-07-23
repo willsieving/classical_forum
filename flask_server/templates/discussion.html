@@ -1,34 +1,58 @@
 {% extends "layout.html" %}
+{% block start_background_div %}<div class="bg2">{% endblock start_background_div %}
+{% block end_background_div %}</div>{% endblock end_background_div %}
 {% block content %}
     <div class="row">
         <div class="col">
             <!-- THIS IS WHERE WE WILL PUT THE BLOCK CONTENT -->
-            <th class="media">
+                <div class="col" style="margin-left: -15px">
+                    <th class="media">
                     <!-- this get the url for the author's image that we will display along with the post (directs to specific file in static depending on user's image_file attribute)-->
-                  <div class="media-body content-section">
-                    <div class="row">
-                        <img class="article-img" src="{{ url_for('static', filename='orator.jpg') }}">
-                        <div class="col">
-                            <div class="article-metadata">
-                                <h2><a class="article-title" href="{{ url_for('main.home') }}">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</a></h2>
+                      <div class="media-body content-section">
+                        <div class="article-metadata">
+                            William Sieving posted on June 16th, 2020
+                        </div>
+                        <div class="row" style="margin-top: 10px">
+                            <img class="article-img" src="{{ url_for('static', filename='stone.jpg') }}">
+                            <div class="col">
+                                <div class="article-metadata">
+                                    <h2><a class="article-title" href="{{ url_for('main.home') }}">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</a></h2>
+                                </div>
+                                <p class="article-content" style="padding-left: 5px">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
                             </div>
-                            <p class="article-content" style="padding-left: 5px">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+                        </div>
+                      </div>
+                    </th>
+                    <div class="row">
+                        <div class="vl rounded"></div>
+                        <div class="col" style="margin-left: -5px">
+                            <th class="media">
+                              <!-- <img class="rounded-circle article-img" src="{{ url_for('static', filename='background.jpg') }}"> -->
+                                <!-- this get the url for the author's image that we will display along with the post (directs to specific file in static depending on user's image_file attribute)-->
+                                <div class="comment">
+                                  <div class="media-body comment-section">
+                                    <div class="article-metadata">
+                                      <a class="article-title" href="{{ url_for('main.home') }}">Name</a>
+                                    </div>
+                                    <a class="article-content" style="padding-left: 5px">Comment</a>
+                                  </div>
+                                </div>
+                            </th>
+                            <th class="media">
+                          <!-- <img class="rounded-circle article-img" src="{{ url_for('static', filename='background.jpg') }}"> -->
+                            <!-- this get the url for the author's image that we will display along with the post (directs to specific file in static depending on user's image_file attribute)-->
+                                <div class="comment">
+                                  <div class="media-body comment-section">
+                                    <div class="article-metadata">
+                                      <a class="article-title" href="{{ url_for('main.home') }}">Name</a>
+                                    </div>
+                                    <a class="article-content" style="padding-left: 5px">Comment</a>
+                                  </div>
+                                </div>
+                            </th>
                         </div>
                     </div>
-                  </div>
-            </th>
-            <th class="media">
-              <!-- <img class="rounded-circle article-img" src="{{ url_for('static', filename='background.jpg') }}"> -->
-                <!-- this get the url for the author's image that we will display along with the post (directs to specific file in static depending on user's image_file attribute)-->
-                <div class="comment">
-                  <div class="media-body comment-section">
-                    <div class="article-metadata">
-                      <h5><a class="article-title" href="{{ url_for('main.home') }}">Name</a></h5>
-                    </div>
-                    <p class="article-content" style="padding-left: 5px">Comment</p>
-                  </div>
                 </div>
-            </th>
             <th class="media">
                     <!-- this get the url for the author's image that we will display along with the post (directs to specific file in static depending on user's image_file attribute)-->
                   <div class="media-body content-section">

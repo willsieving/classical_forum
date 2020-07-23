@@ -24,15 +24,22 @@
 <body>
 
 
-    <div class="bg">
+    {% block start_background_div %}{% endblock %}
 
     <header class="site-header">
       <nav class="navbar navbar-expand-sm navbar-dark bg-steel">
         <div class="container">
-          <a class="navbar-brand mr-4" href="/">The Classical Forum</a>
-          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggle" aria-controls="navbarToggle" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-          </button>
+          <div class="grid">
+              <div class="row">
+                  <a class="navbar-brand mr-4" href="/">The Classical Forum</a>
+                  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggle" aria-controls="navbarToggle" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                  </button>
+                  </div>
+              <div class="row">
+                  <a class="mr-4 ml-1" style="color: #000000">A UC Berkeley Association</a>
+              </div>
+          </div>
           <div class="collapse navbar-collapse" id="navbarToggle">
             <div class="navbar-nav mr-auto">
 
@@ -60,11 +67,12 @@
     </header>
     <main role="main" class="main-border">
         {% block content %}{% endblock %}
-
     </main>
-
-    </div>
+    {% block end_background_div %}{% endblock %}
     <div class="signature">Website created by William Sieving</div>
+
+
+
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
