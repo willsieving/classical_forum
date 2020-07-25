@@ -16,12 +16,13 @@ body, html {
   height: 100%;
 }
 
+
 .event-text {
    color: #024863;
 }
 
-.btn.focus {
-  background-color: rgba(92, 90, 88, 0.83);
+.btn.active {
+  background-color: rgb(173, 187, 216);
   box-shadow: 0 0 0 0.2rem rgba(255, 255, 255, 0);
 }
 
@@ -59,6 +60,28 @@ body, html {
   border-top: 1px solid rgba(95, 76, 76, 0.4);
   margin-top: 10px;
   margin-bottom: 10px;
+}
+
+.hl2 {
+  border-top: 1px solid rgba(95, 76, 76, 0.4);
+  margin-top: 6%;
+  width: 30%;
+  margin-left: 2%;
+}
+
+.border-center {
+  width: 31.504%;
+  position: relative;
+  margin: 2%;
+}
+
+.border-center:before {
+  content: '';
+  position: absolute;
+  bottom: 50%;
+  border-bottom: 1px solid rgba(95, 76, 76, 0.4);
+  width: 100%;
+  z-index: 0;
 }
 
 .signature {
@@ -103,6 +126,19 @@ body, html {
 .bg2 {
   /* The image used */
   background-image: url("background2.jpg");
+
+  /* Full height */
+  height: 140%;
+
+  /* Center and scale the image nicely */
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.bg3 {
+  /* The image used */
+  background-image: url("background3.jpg");
 
   /* Full height */
   height: 140%;
