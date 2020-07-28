@@ -22,7 +22,7 @@ body, html {
 }
 
 .btn.active {
-  background-color: rgb(173, 187, 216);
+  background-color: rgba(255, 254, 252, 0.8);
   box-shadow: 0 0 0 0.2rem rgba(255, 255, 255, 0);
 }
 
@@ -87,6 +87,13 @@ body, html {
 .signature {
   color: #bababa;
   padding: 50px;
+}
+
+.line-clamp {
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
 }
 
 .content-section {
