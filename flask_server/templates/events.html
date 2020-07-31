@@ -3,133 +3,256 @@
 {% block end_background_div %}</div>{% endblock end_background_div %}
 
 {% block content %}
-<h2 class="text-center event-text" style="margin-top: 50px">Past Events</h2>
+<h2 class="text-center event-text" style="margin-top: 50px; margin-left: 40px">Past Events</h2>
+<div class="container-fluid">
 <div class="row">
-<div class="col-md-2" style="margin-right: -15px">
-  <h5 class="text-center">Year</h5>
-  <a class="list-group btn-group btn-group-toggle" data-toggle="buttons">
-    <div class="hl" style="margin-right: 10px"></div>
-    <label class="btn btn-events rounded-left active" style="margin-left: -1px">
-        <input type="radio" name="event_year" id="2020" autocomplete="off"> 2020
-    </label>
-    <div style="padding-bottom: 0px"></div>
-    <div class="hl" style="margin-right: 10px"></div>
-    <label class="btn btn-events rounded-left">
-        <input type="radio" name="event_year" id="2019" autocomplete="off"> 2019
-    </label>
-    <div style="padding-bottom: 0px"></div>
-    <div class="hl" style="margin-right: 10px"></div>
-    <label class="btn btn-events rounded-left">
-        <input type="radio" name="event_year" id="2018" autocomplete="off"> 2018
-    </label>
-    <div style="padding-bottom: 0px"></div>
-    <div class="hl" style="margin-right: 10px"></div>
-    <label class="btn btn-events rounded-0">
-        <input type="radio" name="event_year" id="2017" autocomplete="off"> 2017
-    </label>
+<!--
+    <div class="col-sm-2">
+      <h5 class="text-center">Year</h5>
 
-  </a>
-</div>
+      <a class="list-group btn-group btn-group-toggle" data-toggle="buttons">
+        <div class="hl" style="margin-right: 10px"></div>
+        <label class="btn btn-events rounded-left active" style="margin-left: -1px">
+            <input type="radio" name="event_year" id="2020" autocomplete="off"> 2020
+        </label>
+        <div style="padding-bottom: 0px"></div>
+        <div class="hl" style="margin-right: 10px"></div>
+        <label class="btn btn-events rounded-left" style="margin-left: -1px">
+            <input type="radio" name="event_year" id="2019" autocomplete="off"> 2019
+        </label>
+        <div style="padding-bottom: 0px"></div>
+        <div class="hl" style="margin-right: 10px"></div>
+        <label class="btn btn-events rounded-left" style="margin-left: -1px">
+            <input type="radio" name="event_year" id="2018" autocomplete="off"> 2018
+        </label>
+        <div style="padding-bottom: 0px"></div>
+        <div class="hl" style="margin-right: 10px"></div>
+        <label class="btn btn-events rounded-left" style="margin-left: -1px">
+            <input type="radio" name="event_year" id="2017" autocomplete="off"> 2017
+        </label>
+      </a>
+    </div>
+-->
+
+    <div class="accordion" id="accordionExample">
+      <div class="card" style="background-color: rgba(0, 0, 0, 0); border: 0px">
+        <div class="card-header" id="headingOne">
+            <button class="btn btn-link nounderline" style="min-width: 150px; min-height: 60px; color: rgb(2,2,2)"
+                type="button" data-toggle="collapse" data-target="#collapseOne"
+                aria-expanded="true" aria-controls="collapseOne" href="javascript:void(0);">
+                <a style="">2020</a>
+            </button>
+        </div>
+        <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordionExample">
 
 
-<div class="rounded-left" style="background-color: rgba(255,254,252,0.8); width: 82%">
-  <div class="col container" style="margin: 3%">
-    <div class="row" style="width: 90%">
-      <h5 class="align-self-center" style="width: 7%">July</h5>
-      <div class="vl2 rounded" style="margin-right: 2%; margin-bottom: 2%; margin-top: 2%"></div>
-      <div class="col">
+              <div class="card-body">
+                  <a class="list-group btn-group btn-group-toggle" role="group" data-toggle="buttons">
+                    <label class="btn btn-default rounded-left" style="margin-left: -1px; min-width: 100%">
+                        <input type="radio" name="event_year" id="2020june" autocomplete="off">
+                        June
 
-        <div class="row">
-        <h4 class="bold text-center event-text" style="font-family: 'Playfair Display', serif; margin-left: 1%">29</h4>
-        <div class="col" style="margin-top: -10px;">
-            <a class="bold nounderline" style="color: #035c7e; font-size: 1.25rem; line-height: 1.2" href="/">Poetry Reading Live Online</a>
-            <p class="line-clamp" style="margin-top: 1%; margin-bottom: 3%">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
-            </p>
-        </div>
-        </div>
+                    </label>
+                    <div class="hl" style="margin-right: 10px"></div>
+                    <label class="btn btn-default rounded-left" style="margin-left: -1px; min-width: 100%">
+                        <input type="radio" name="event_year" id="2020july" autocomplete="off"> July
+                    </label>
+                    <div class="hl" style="margin-right: 10px"></div>
+                    <label class="btn btn-default rounded-left" style="margin-left: -1px; min-width: 100%">
+                        <input type="radio" name="event_year" id="2020august" autocomplete="off"> August
+                    </label>
+                    <div class="hl" style="margin-right: 10px"></div>
+                    <label class="btn btn-default rounded-left" style="margin-left: -1px; min-width: 100%">
+                        <input type="radio" name="event_year" id="2020september" autocomplete="off"> September
+                    </label>
+                  </a>
+              </div>
 
-        <div class="row">
-        <h4 class="bold text-center event-text" style="font-family: 'Playfair Display', serif; margin-left: 1%">29</h4>
-        <div class="col" style="margin-top: -10px;">
-            <a class="bold nounderline" style="color: #035c7e; font-size: 1.25rem; line-height: 1.2" href="/">Poetry Reading Live Online</a>
-            <p class="line-clamp" style="margin-top: 1%; margin-bottom: 3%">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
-            </p>
-        </div>
-        </div>
 
-        <div class="row">
-        <h4 class="bold text-center event-text" style="font-family: 'Playfair Display', serif; margin-left: 1%">29</h4>
-        <div class="col" style="margin-top: -10px;">
-            <a class="bold nounderline" style="color: #035c7e; font-size: 1.25rem; line-height: 1.2" href="/">Poetry Reading Live Online</a>
-            <p class="line-clamp" style="margin-top: 1%; margin-bottom: 3%">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
-            </p>
         </div>
+      </div>
+      <div class="card" style="background-color: rgba(0, 0, 0, 0); border: 0px">
+        <div class="card-header" id="headingTwo">
+          <h5 class="mb-0">
+            <button class="btn btn-link nounderline" style="min-width: 150px; min-height: 60px; color: rgb(2,2,2)"
+                type="button" data-toggle="collapse" data-target="#collapseTwo"
+                aria-expanded="true" aria-controls="collapseTwo">
+                <a style="">2020</a>
+            </button>
+          </h5>
         </div>
-        <div class="row">
-        <h4 class="bold text-center event-text" style="font-family: 'Playfair Display', serif; margin-left: 1%">29</h4>
-        <div class="col" style="margin-top: -10px;">
-            <a class="bold nounderline" style="color: #035c7e; font-size: 1.25rem; line-height: 1.2" href="/">Poetry Reading Live Online</a>
-            <p class="line-clamp" style="margin-top: 1%; margin-bottom: 3%">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
-            </p>
-        </div>
-        </div>
+        <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionExample">
 
+
+          <div class="card-body">
+              <a class="list-group btn-group btn-group-toggle" data-toggle="buttons">
+                <label class="btn btn-events rounded-left" style="margin-left: -1px; min-width: 100%">
+                    <input type="radio" name="event_year" id="2019jun" autocomplete="off">
+                    June
+
+                </label>
+                <div class="hl" style="margin-right: 10px"></div>
+                <label class="btn btn-events rounded-left" style="margin-left: -1px; min-width: 100%">
+                    <input type="radio" name="event_year" id="2019july" autocomplete="off"> July
+                </label>
+                <div class="hl" style="margin-right: 10px"></div>
+                <label class="btn btn-events rounded-left" style="margin-left: -1px; min-width: 100%">
+                    <input type="radio" name="event_year" id="2019august" autocomplete="off"> August
+                </label>
+                <div class="hl" style="margin-right: 10px"></div>
+                <label class="btn btn-events rounded-left" style="margin-left: -1px; min-width: 100%">
+                    <input type="radio" name="event_year" id="2019september" autocomplete="off"> September
+                </label>
+              </a>
+          </div>
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="card" style="background-color: rgba(0, 0, 0, 0); border: 0px">
+        <div class="card-header" id="headingThree">
+          <h5 class="mb-0">
+            <button class="btn btn-link nounderline" style="min-width: 150px; min-height: 60px; color: rgb(2,2,2)"
+                type="button" data-toggle="collapse" data-target="#collapseThree"
+                aria-expanded="true" aria-controls="collapseThree">
+                <a style="">2020</a>
+            </button>
+          </h5>
+        </div>
+        <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordionExample">
+
+
+          <div class="card-body">
+              <a class="list-group btn-group btn-group-toggle" data-toggle="buttons">
+                <label class="btn btn-events rounded-left" style="margin-left: -1px; min-width: 100%">
+                    <input type="radio" name="event_year" id="2018june" autocomplete="off">
+                    June
+
+                </label>
+                <div class="hl" style="margin-right: 10px"></div>
+                <label class="btn btn-events rounded-left" style="margin-left: -1px; min-width: 100%">
+                    <input type="radio" name="event_year" id="2018july" autocomplete="off"> July
+                </label>
+                <div class="hl" style="margin-right: 10px"></div>
+                <label class="btn btn-events rounded-left" style="margin-left: -1px; min-width: 100%">
+                    <input type="radio" name="event_year" id="2018august" autocomplete="off"> August
+                </label>
+                <div class="hl" style="margin-right: 10px"></div>
+                <label class="btn btn-events rounded-left" style="margin-left: -1px; min-width: 100%">
+                    <input type="radio" name="event_year" id="2018september" autocomplete="off"> September
+                </label>
+              </a>
+          </div>
+
+
+        </div>
       </div>
     </div>
 
+    <div class="rounded-left" style="background-color: rgba(255,254,252,0.8); margin-top: 10px">
+      <div class="col container" style="margin: 3%">
+        <div class="row" style="width: 95%">
+          <h5 class="align-self-center bold" style="width: 9%">July</h5>
+          <div class="vl2 rounded" style="margin-right: 2%; margin-bottom: 2%; margin-top: 2%"></div>
+          <div class="col">
 
-    <div class="row" style="width: 90%">
-      <h5 class="align-self-center" style="width: 7%;">June</h5>
-      <div class="vl2 rounded" style="margin-right: 2%; margin-bottom: 2%; margin-top: 2%"></div>
-      <div class="col">
-        <div class="row">
-        <h4 class="bold text-center event-text" style="font-family: 'Playfair Display', serif; margin-left: 1%">29</h4>
-        <div class="col" style="margin-top: -10px;">
-            <a class="bold nounderline" style="color: #035c7e; font-size: 1.25rem; line-height: 1.2" href="/">Townsend Book Chat</a>
-            <p class="line-clamp" style="margin-top: 1%; margin-bottom: 3%">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
-            </p>
-        </div>
+            <div class="row">
+            <h4 class="bold text-center event-text" style="font-family: 'Playfair Display', serif; margin-left: 1%">29</h4>
+            <div class="col" style="margin-top: -10px;">
+                <a class="bold nounderline" style="color: #035c7e; font-size: 1.25rem; line-height: 1.2" href="/">Poetry Reading Live Online</a>
+                <p class="line-clamp" style="margin-top: 1%; margin-bottom: 3%">
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+                </p>
+            </div>
+            </div>
+
+            <div class="row">
+            <h4 class="bold text-center event-text" style="font-family: 'Playfair Display', serif; margin-left: 1%">29</h4>
+            <div class="col" style="margin-top: -10px;">
+                <a class="bold nounderline" style="color: #035c7e; font-size: 1.25rem; line-height: 1.2" href="/">Poetry Reading Live Online</a>
+                <p class="line-clamp" style="margin-top: 1%; margin-bottom: 3%">
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+                </p>
+            </div>
+            </div>
+
+            <div class="row">
+            <h4 class="bold text-center event-text" style="font-family: 'Playfair Display', serif; margin-left: 1%">29</h4>
+            <div class="col" style="margin-top: -10px;">
+                <a class="bold nounderline" style="color: #035c7e; font-size: 1.25rem; line-height: 1.2" href="/">Poetry Reading Live Online</a>
+                <p class="line-clamp" style="margin-top: 1%; margin-bottom: 3%">
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+                </p>
+            </div>
+            </div>
+            <div class="row">
+            <h4 class="bold text-center event-text" style="font-family: 'Playfair Display', serif; margin-left: 1%">29</h4>
+            <div class="col" style="margin-top: -10px;">
+                <a class="bold nounderline" style="color: #035c7e; font-size: 1.25rem; line-height: 1.2" href="/">Poetry Reading Live Online</a>
+                <p class="line-clamp" style="margin-top: 1%; margin-bottom: 3%">
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+                </p>
+            </div>
+            </div>
+
+          </div>
         </div>
 
-        <div class="row">
-        <h4 class="bold text-center event-text" style="font-family: 'Playfair Display', serif; margin-left: 1%">29</h4>
-        <div class="col" style="margin-top: -10px;">
-            <a class="bold nounderline" style="color: #035c7e; font-size: 1.25rem; line-height: 1.2" href="/">Townsend Book Chat</a>
-            <p class="line-clamp" style="margin-top: 1%; margin-bottom: 3%">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
-            </p>
-        </div>
+        <div style="margin-top: 2%; margin-bottom: 2%"></div>
+
+        <div class="row" style="width: 95%">
+          <h5 class="align-self-center bold" style="width: 9%;">June</h5>
+          <div class="vl2 rounded" style="margin-right: 2%; margin-bottom: 2%; margin-top: 2%"></div>
+          <div class="col">
+            <div class="row">
+            <h4 class="bold text-center event-text" style="font-family: 'Playfair Display', serif; margin-left: 1%">29</h4>
+            <div class="col" style="margin-top: -10px;">
+                <a class="bold nounderline" style="color: #035c7e; font-size: 1.25rem; line-height: 1.2" href="/">Townsend Book Chat</a>
+                <p class="line-clamp" style="margin-top: 1%; margin-bottom: 3%">
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+                </p>
+            </div>
+            </div>
+
+            <div class="row">
+            <h4 class="bold text-center event-text" style="font-family: 'Playfair Display', serif; margin-left: 1%">29</h4>
+            <div class="col" style="margin-top: -10px;">
+                <a class="bold nounderline" style="color: #035c7e; font-size: 1.25rem; line-height: 1.2" href="/">Townsend Book Chat</a>
+                <p class="line-clamp" style="margin-top: 1%; margin-bottom: 3%">
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+                </p>
+            </div>
+            </div>
+
+            <div class="row">
+            <h4 class="bold text-center event-text" style="font-family: 'Playfair Display', serif; margin-left: 1%">29</h4>
+            <div class="col" style="margin-top: -10px;">
+                <a class="bold nounderline" style="color: #035c7e; font-size: 1.25rem; line-height: 1.2" href="/">Townsend Book Chat</a>
+                <p class="line-clamp" style="margin-top: 1%; margin-bottom: 3%">
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+                </p>
+            </div>
+            </div>
+            <div class="row">
+            <h4 class="bold text-center event-text" style="font-family: 'Playfair Display', serif; margin-left: 1%">29</h4>
+            <div class="col" style="margin-top: -10px;">
+                <a class="bold nounderline" style="color: #035c7e; font-size: 1.25rem; line-height: 1.2" href="/">Townsend Book Chat</a>
+                <p class="line-clamp" style="margin-top: 1%; margin-bottom: 3%">
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+                </p>
+            </div>
+            </div>
+
+          </div>
         </div>
 
-        <div class="row">
-        <h4 class="bold text-center event-text" style="font-family: 'Playfair Display', serif; margin-left: 1%">29</h4>
-        <div class="col" style="margin-top: -10px;">
-            <a class="bold nounderline" style="color: #035c7e; font-size: 1.25rem; line-height: 1.2" href="/">Townsend Book Chat</a>
-            <p class="line-clamp" style="margin-top: 1%; margin-bottom: 3%">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
-            </p>
-        </div>
-        </div>
-        <div class="row">
-        <h4 class="bold text-center event-text" style="font-family: 'Playfair Display', serif; margin-left: 1%">29</h4>
-        <div class="col" style="margin-top: -10px;">
-            <a class="bold nounderline" style="color: #035c7e; font-size: 1.25rem; line-height: 1.2" href="/">Townsend Book Chat</a>
-            <p class="line-clamp" style="margin-top: 1%; margin-bottom: 3%">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
-            </p>
-        </div>
-        </div>
 
       </div>
     </div>
-
-
-  </div>
 </div>
 </div>
 {% endblock content %}
