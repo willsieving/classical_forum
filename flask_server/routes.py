@@ -11,6 +11,10 @@ def home():
 def discussion():
     return render_template('discussion.html')
 
-@main.route('/events')
-def upcoming_events():
-    return render_template('events.html')
+@main.route('/past_events')
+def past_events():
+    return render_template('past_events.html')
+
+@main.route('/announcements')
+def announcements():
+    return render_template('announcements.html')
