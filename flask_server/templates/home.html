@@ -27,79 +27,60 @@
     <div class="row" style="padding-top: 30px">
         <div class="col content-section inner" style="padding-top: 15px; min-width: 300px">
             <h3 class="event-text" style="margin-left: 0%; margin-bottom: 3%">Upcoming Events</h3>
+            {% for item in events.items %}
             <div class="row" style="margin-top: 20px; flex-basis: 0">
                 <div class="container d-flex" style="max-width: 10%">
                     <div class="col align-self-center" style="margin-right: -15px; margin-left: -15px">
-                        <h6 class="text-center event-text">Aug</h6>
-                        <h4 class="bold text-center event-text" style="font-family: 'Playfair Display', serif">29</h4>
-                        <h6 class="text-center event-text" style="margin-top: 10px">2020</h6>
+                        <h6 class="text-center event-text">{{ item.date_posted.strftime('%B')[:3] }}</h6>
+                        <h4 class="bold text-center event-text" style="font-family: 'Playfair Display', serif">{{ item.date_posted.strftime('%d') }}</h4>
+                        <h6 class="text-center event-text" style="margin-top: 10px">{{ item.date_posted.strftime('%Y') }}</h6>
                     </div>
                 </div>
                 <div class="vl2 rounded" style="margin-bottom: 3%; margin-top: 3%"></div>
 
                 <div class="col" style="margin-top: -10px">
-                    <a class="bold nounderline" style="color: #035c7e; font-size: 1.25rem; line-height: 1.2" href="/">Poetry Reading Live Online</a>
+                    <a class="bold nounderline" style="color: #035c7e; font-size: 1.25rem; line-height: 1.2" href="/">{{ item.title }}</a>
                     <div style="margin-top: 1%; margin-bottom: 3%">
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+                        {{ item.content }}
                     </div>
                 </div>
             </div>
-            <div class="row" style="margin-top: 20px">
-                <div class="container d-flex" style="max-width: 10%">
-                    <div class="col align-self-center" style="margin-right: -15px; margin-left: -15px">
-                        <h6 class="text-center event-text">Aug</h6>
-                        <h4 class="bold text-center event-text" style="font-family: 'Playfair Display', serif">29</h4>
-                        <h6 class="text-center event-text" style="margin-top: 10px">2020</h6>
-                    </div>
-                </div>
-                <div class="vl2 rounded" style="margin-bottom: 3%; margin-top: 3%"></div>
+            {% endfor %}
 
-                <div class="col" style="margin-top: -10px">
-                    <a class="bold nounderline" style="color: #035c7e; font-size: 1.25rem; margin-bottom: .5rem; line-height: 1.2" href="/">Townsend Book Chat</a>
-                    <div style="margin-top: 1%; margin-bottom: 3%">
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
-                    </div>
-                </div>
-            </div>
             <a class="float-right event-text nounderline" href="/events">See More...</a>
         </div>
 
         <div style="padding: .5%"></div>
 
         <div class="col content-section inner" style="padding-top: 15px; min-width: 300px">
-            <h3 class="event-text" style="margin-left: 0%; margin-bottom: 3%">Announcements</h3>
+            <h3 class="event-text" style="margin-left: 0%; margin-bottom: 3%">News</h3>
             <div class="row" style="margin-top: 20px; flex-basis: 0">
                 <div class="container d-flex" style="max-width: 10%">
                     <div class="col align-self-center" style="margin-right: -15px; margin-left: -15px">
-                        <h6 class="text-center event-text">Aug</h6>
-                        <h4 class="bold text-center event-text" style="font-family: 'Playfair Display', serif">29</h4>
-                        <h6 class="text-center event-text" style="margin-top: 10px">2020</h6>
+                        <img src="{{ url_for('static', filename='img_avatar.png') }}">
                     </div>
                 </div>
-                <div class="vl2 rounded" style="margin-bottom: 3%; margin-top: 3%"></div>
 
-                <div class="col" style="margin-top: -10px">
+                <div class="col" style="margin-top: -10px; margin-left: 10px">
                     <a class="bold nounderline" style="color: #035c7e; font-size: 1.25rem; line-height: 1.2" href="/">Poetry Reading Live Online</a>
-                    <div style="margin-top: 1%; margin-bottom: 3%">
+                    <p class="line-clamp" style="margin-top: 1%; margin-bottom: 3%">
                         Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
-                    </div>
+                    </p>
                 </div>
             </div>
             <div class="row" style="margin-top: 20px">
                 <div class="container d-flex" style="max-width: 10%">
                     <div class="col align-self-center" style="margin-right: -15px; margin-left: -15px">
-                        <h6 class="text-center event-text">Aug</h6>
-                        <h4 class="bold text-center event-text" style="font-family: 'Playfair Display', serif">29</h4>
-                        <h6 class="text-center event-text" style="margin-top: 10px">2020</h6>
+                        <img src="{{ url_for('static', filename='img_avatar.png') }}">
                     </div>
                 </div>
                 <div class="vl2 rounded" style="margin-bottom: 3%; margin-top: 3%"></div>
 
                 <div class="col" style="margin-top: -10px">
                     <a class="bold nounderline" style="color: #035c7e; font-size: 1.25rem; margin-bottom: .5rem; line-height: 1.2" href="/">Townsend Book Chat</a>
-                    <div style="margin-top: 1%; margin-bottom: 3%">
+                    <p class="line-clamp" style="margin-top: 1%; margin-bottom: 3%">
                         Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
-                    </div>
+                    </p>
                 </div>
             </div>
             <a class="float-right event-text nounderline" href="/events">See More...</a>
