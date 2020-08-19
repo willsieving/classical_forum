@@ -100,6 +100,13 @@ body, html {
   overflow: hidden;
 }
 
+.line-clamp-para {
+  display: -webkit-box;
+  -webkit-line-clamp: 13;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
 .content-section {
   background: rgba(255, 254, 252, 0.8);
   padding: 10px 20px;
