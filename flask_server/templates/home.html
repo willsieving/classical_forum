@@ -15,17 +15,17 @@
 
     <div class="row">
         <div class="col-lg">
-            <img class="rounded img-fluid my-auto" style="margin-top: 10px; margin-bottom: 10px" src="{{ url_for('static', filename='greece_long.jpg') }}">
+            <img class="rounded img-fluid" style="margin-top: 10px; max-height: 550px; min-height: 0px" src="{{ url_for('static', filename='greece_long.jpg') }}">
         </div>
 
-        <div class="col-lg">
-            <div class="content-section" style="background: rgba(208,203,199,0.8); border: 0px; margin-top: 10px; margin-bottom: 10px; height: 93%;">
+        <div class="col-lg" style="margin-bottom: -10px">
+            <div class="content-section" style="background: rgba(208,203,199,0.8); max-height:550px; border: 0px; margin-top: 10px; margin-bottom: -10px; height: 93%">
                 <p class="line-clamp-para" style="font-size: large">The Classical Forum facilitates events related to the study of Classics. Our purpose is to create a community at UC Berkeley between professors, graduate students, and undergraduate students through events. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. <br> <br> Sign up for the Classical Forum's e-mail list. By joining the list, you will receive invitations to upcoming events, as well as general postings for related lectures, conferences, and symposia. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
             </div>
         </div>
     </div>
     <div class="row" style="padding-top: 30px">
-        <div class="col content-section inner" style="padding-top: 15px; min-width: 300px">
+        <div class="col content-section inner" style="padding-top: 15px; min-width: 280px">
             <h3 class="event-text" style="margin-left: 0%; margin-bottom: 3%">Upcoming Events</h3>
             {% for item in events.items %}
             <div class="row" style="margin-top: 20px; flex-basis: 0">
@@ -52,7 +52,7 @@
 
         <div style="padding: .5%"></div>
 
-        <div class="col content-section inner" style="padding-top: 15px; min-width: 300px">
+        <div class="col content-section inner" style="padding-top: 15px; min-width: 280px">
             <h3 class="event-text" style="margin-left: 0%; margin-bottom: 3%">News</h3>
             <div class="row" style="margin-top: 20px; flex-basis: 0">
                 <div class="container d-flex" style="max-width: 10%">
@@ -88,7 +88,7 @@
 
         <div style="padding: .5%"></div>
 
-        <div class="col content-section inner" style="padding-top: 15px; min-width: 300px">
+        <div class="col content-section inner" style="padding-top: 15px; min-width: 280px">
             <h3 class="event-text" style="margin-left: 0%; margin-bottom: 3%">Discussions</h3>
             <div class="row" style="margin-top: 20px; flex-basis: 0">
                 <div class="container d-flex" style="max-width: 10%">
