@@ -7,7 +7,7 @@
 <div style="padding-top: 30px"></div>
 <h2 class="text-center event-text">Past Events</h2>
 <div class="row">
-<div class="col-md-2" style="margin-top: 2%">
+<div class="col-md-2" style="margin-top: 2%; padding-left: 2%">
   <h5 class="text-center">Year</h5>
   <a class="list-group btn-group btn-group-toggle" data-toggle="buttons">
     <div class="hl" style=""></div>
@@ -37,103 +37,42 @@
 <div class="rounded-left container" style="background-color: rgba(255,254,252,0.8); margin-top: 2%; max-width: 74.5%; min-width: 20%">
   <div class="col" style="margin: 3%">
     <div class="row" style="width: 90%">
+      <div class="row">
+          <div class="col">
 
-      <div class="col">
-
-        <h5 class="align-self-center" style="width: 7%; margin-left: -.5%">June</h5>
-        <div class="hl3 rounded" style="margin-right: 2%; margin-bottom: 30px; margin-top: 2%; margin-left: -.5%"></div>
-
-        <div class="row">
-        <h4 class="bold text-center event-text" style="font-family: 'Playfair Display', serif; margin-left: 1%">29</h4>
-        <div class="col" style="margin-top: -1%">
-            <a class="bold nounderline" style="color: #035c7e; font-size: 1.25rem; line-height: 1.2" href="/">Poetry Reading Live Online</a>
-            <p class="line-clamp" style="margin-top: 1%; margin-bottom: 3%">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
-            </p>
-        </div>
-        </div>
-
-        <div class="row">
-        <h4 class="bold text-center event-text" style="font-family: 'Playfair Display', serif; margin-left: 1%">29</h4>
-        <div class="col" style="margin-top: -1%">
-            <a class="bold nounderline" style="color: #035c7e; font-size: 1.25rem; line-height: 1.2" href="/">Poetry Reading Live Online</a>
-            <p class="line-clamp" style="margin-top: 1%; margin-bottom: 3%">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
-            </p>
-        </div>
-        </div>
-
-        <div class="row">
-        <h4 class="bold text-center event-text" style="font-family: 'Playfair Display', serif; margin-left: 1%">29</h4>
-        <div class="col" style="margin-top: -1%">
-            <a class="bold nounderline" style="color: #035c7e; font-size: 1.25rem; line-height: 1.2" href="/">Poetry Reading Live Online</a>
-            <p class="line-clamp" style="margin-top: 1%; margin-bottom: 3%">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
-            </p>
-        </div>
-        </div>
-        <div class="row">
-        <h4 class="bold text-center event-text" style="font-family: 'Playfair Display', serif; margin-left: 1%">29</h4>
-        <div class="col" style="margin-top: -1%">
-            <a class="bold nounderline" style="color: #035c7e; font-size: 1.25rem; line-height: 1.2" href="/">Poetry Reading Live Online</a>
-            <p class="line-clamp" style="margin-top: 1%; margin-bottom: 3%">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
-            </p>
-        </div>
-        </div>
-
+            <h5 class="align-self-center" style="width: 7%; margin-left: -.5%">June</h5>
+            <div class="hl3 rounded" style="margin-right: 2%; margin-bottom: 30px; margin-top: 2%; margin-left: -.5%"></div>
+            {% for item in events.items %}
+                <div class="row">
+                    <h4 class="bold text-center event-text" style="font-family: 'Playfair Display', serif; margin-left: 1%">{{ item.date_posted.strftime('%d') }}</h4>
+                    <div class="col" style="margin-top: -1%">
+                        <a class="bold nounderline" style="color: #035c7e; font-size: 1.25rem; line-height: 1.2" href="/">{{ item.title }}</a>
+                        <p class="line-clamp" style="margin-top: 1%; margin-bottom: 3%">
+                            {{ item.content }}
+                        </p>
+                    </div>
+                </div>
+            {% endfor %}
+          </div>
       </div>
-    </div>
-
-
-    <div class="row" style="width: 90%">
-
-      <div class="col">
-
-        <h5 class="align-self-center" style="width: 7%; margin-left: -.5%">July</h5>
-        <div class="hl3 rounded" style="margin-right: 2%; margin-bottom: 30px; margin-top: 2%; margin-left: -.5%"></div>
 
         <div class="row">
-        <h4 class="bold text-center event-text" style="font-family: 'Playfair Display', serif; margin-left: 1%">29</h4>
-        <div class="col" style="margin-top: -1%">
-            <a class="bold nounderline" style="color: #035c7e; font-size: 1.25rem; line-height: 1.2" href="/">Townsend Book Chat</a>
-            <p class="line-clamp" style="margin-top: 1%; margin-bottom: 3%">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
-            </p>
+          <div class="col">
+            <h5 class="align-self-center" style="width: 7%; margin-left: -.5%">July</h5>
+            <div class="hl3 rounded" style="margin-right: 2%; margin-bottom: 30px; margin-top: 2%; margin-left: -.5%"></div>
+            {% for item in events.items %}
+                <div class="row">
+                    <h4 class="bold text-center event-text" style="font-family: 'Playfair Display', serif; margin-left: 1%">{{ item.date_posted.strftime('%d') }}</h4>
+                    <div class="col" style="margin-top: -1%">
+                        <a class="bold nounderline" style="color: #035c7e; font-size: 1.25rem; line-height: 1.2" href="/">{{ item.title }}</a>
+                        <p class="line-clamp" style="margin-top: 1%; margin-bottom: 3%">
+                            {{ item.content }}
+                        </p>
+                    </div>
+                </div>
+            {% endfor %}
+          </div>
         </div>
-        </div>
-
-        <div class="row">
-        <h4 class="bold text-center event-text" style="font-family: 'Playfair Display', serif; margin-left: 1%">29</h4>
-        <div class="col" style="margin-top: -1%">
-            <a class="bold nounderline" style="color: #035c7e; font-size: 1.25rem; line-height: 1.2" href="/">Townsend Book Chat</a>
-            <p class="line-clamp" style="margin-top: 1%; margin-bottom: 3%">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
-            </p>
-        </div>
-        </div>
-
-        <div class="row">
-        <h4 class="bold text-center event-text" style="font-family: 'Playfair Display', serif; margin-left: 1%">29</h4>
-        <div class="col" style="margin-top: -1%">
-            <a class="bold nounderline" style="color: #035c7e; font-size: 1.25rem; line-height: 1.2" href="/">Townsend Book Chat</a>
-            <p class="line-clamp" style="margin-top: 1%; margin-bottom: 3%">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
-            </p>
-        </div>
-        </div>
-        <div class="row">
-        <h4 class="bold text-center event-text" style="font-family: 'Playfair Display', serif; margin-left: 1%">29</h4>
-        <div class="col" style="margin-top: -1%">
-            <a class="bold nounderline" style="color: #035c7e; font-size: 1.25rem; line-height: 1.2" href="/">Townsend Book Chat</a>
-            <p class="line-clamp" style="margin-top: 1%; margin-bottom: 3%">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
-            </p>
-        </div>
-        </div>
-
-      </div>
-    </div>
 
 
   </div>
