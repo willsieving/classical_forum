@@ -31,9 +31,9 @@
             <div class="row" style="margin-top: 20px; flex-basis: 0">
                 <div class="container d-flex" style="max-width: 10%">
                     <div class="col align-self-center" style="margin-right: -15px; margin-left: -15px">
-                        <h6 class="text-center event-text">{{ item.date_posted.strftime('%B')[:3] }}</h6>
-                        <h4 class="bold text-center event-text" style="font-family: 'Playfair Display', serif">{{ item.date_posted.strftime('%d') }}</h4>
-                        <h6 class="text-center event-text" style="margin-top: 10px">{{ item.date_posted.strftime('%Y') }}</h6>
+                        <h6 class="text-center event-text">{{ item.event_date.strftime('%B')[:3] }}</h6>
+                        <h4 class="bold text-center event-text" style="font-family: 'Playfair Display', serif">{{ item.event_date.strftime('%d') }}</h4>
+                        <h6 class="text-center event-text" style="margin-top: 10px">{{ item.event_date.strftime('%Y') }}</h6>
                     </div>
                 </div>
                 <div class="vl2 rounded" style="margin-bottom: 3%; margin-top: 3%"></div>
@@ -83,7 +83,7 @@
                     </p>
                 </div>
             </div>
-            <a class="float-right event-text nounderline" href="/events">See More...</a>
+            <a class="float-right event-text nounderline" href="{{ url_for('main.news') }}">See More...</a>
         </div>
 
         <div style="padding: .5%"></div>

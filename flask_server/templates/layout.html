@@ -52,12 +52,12 @@
                     <a class="nav-item nav-link text-center" href="{{ url_for('main.home') }}">Home</a>
                 </div>
                 <div class="container text-center text-nowrap">
-                    <a class="nav-item nav-link text-center" href="{{ url_for('main.news') }}">Announcements</a>
+                    <a class="nav-item nav-link text-center" href="{{ url_for('main.news') }}">News</a>
                 </div>
                  <div class="nav-item dropdown container text-center">
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Events</a>
                     <div class="dropdown-menu rounded-0 align-center" aria-labelledby="navbarDropdown" style="background-color: rgba(95, 76, 76, 0.8); border: 0px; min-width: 200px">
-                      <a class="dropdown-item" href="{{ url_for('main.news') }}" style="color: rgb(255,255,255); max-width: 200px">Upcoming Events</a>
+                      <a class="dropdown-item" href="{{ url_for('main.upcoming_events') }}" style="color: rgb(255,255,255); max-width: 200px">Upcoming Events</a>
                       <a class="dropdown-item" href="{{ url_for('main.past_events') }}" style="color: rgb(255,255,255); width: 200px">Past Events</a>
                     </div>
                  </div>

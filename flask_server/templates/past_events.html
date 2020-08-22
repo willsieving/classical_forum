@@ -5,7 +5,7 @@
 {% block content %}
 
 <div style="padding-top: 30px"></div>
-<h2 class="text-center event-text">Past Events</h2>
+<h2 class="bold text-center event-text">Past Events</h2>
 <div class="row">
 <div class="col-md-2" style="margin-top: 2%; padding-left: 2%">
   <h5 class="text-center">Year</h5>
@@ -37,42 +37,84 @@
 <div class="rounded-left container" style="background-color: rgba(255,254,252,0.8); margin-top: 2%; max-width: 74.5%; min-width: 20%">
   <div class="col" style="margin: 3%">
     <div class="row" style="width: 90%">
-      <div class="row">
+      <div class="row" style="width: 120%">
           <div class="col">
 
             <h5 class="align-self-center" style="width: 7%; margin-left: -.5%">June</h5>
-            <div class="hl3 rounded" style="margin-right: 2%; margin-bottom: 30px; margin-top: 2%; margin-left: -.5%"></div>
+            <div class="hl3 rounded" style="margin-right: 2%; margin-bottom: 40px; margin-top: 2%; margin-left: -.5%"></div>
+            <script>
+                var none_counter_jun = 0;
+            </script>
             {% for item in events.items %}
-                <div class="row">
-                    <h4 class="bold text-center event-text" style="font-family: 'Playfair Display', serif; margin-left: 1%">{{ item.date_posted.strftime('%d') }}</h4>
-                    <div class="col" style="margin-top: -1%">
-                        <a class="bold nounderline" style="color: #035c7e; font-size: 1.25rem; line-height: 1.2" href="/">{{ item.title }}</a>
-                        <p class="line-clamp" style="margin-top: 1%; margin-bottom: 3%">
-                            {{ item.content }}
-                        </p>
+                {% if item.event_date.strftime('%m') == '06' %}
+                    <div class="row">
+                        <h4 class="text-center event-text" style="font-family: 'Playfair Display', serif; margin-left: 1%; margin-right: 1%">{{ item.event_date.strftime('%d') }}</h4>
+                        <div class="col" style="margin-top: -1%">
+                            <a class="bold nounderline" style="color: #035c7e; font-size: 1.25rem; line-height: 1.2" href="/">{{ item.title }}</a>
+                            <p class="line-clamp" style="margin-top: 1%; margin-bottom: 3%">
+                                {{ item.content }}
+                            </p>
+                        </div>
                     </div>
-                </div>
+                    <script>
+                        none_counter_jun = none_counter_jun + 1;
+                    </script>
+                {% endif %}
             {% endfor %}
+
+            <div class="row" id="no_events_jun">
+                <h4 class="text-center event-text" style="font-family: 'Playfair Display', serif; margin-left: 5%; margin-bottom: 30px; margin-top: -10px">No Events Found</h4>
+            </div>
+            <script>
+                if (none_counter_jun === 0) {
+                    document.getElementById('no_events_jun').style.display = ""
+                } else {
+                    document.getElementById('no_events_jun').style.display = "none"
+                };
+            </script>
+
           </div>
       </div>
 
-        <div class="row">
+      <div class="row" style="width: 120%">
           <div class="col">
+
             <h5 class="align-self-center" style="width: 7%; margin-left: -.5%">July</h5>
-            <div class="hl3 rounded" style="margin-right: 2%; margin-bottom: 30px; margin-top: 2%; margin-left: -.5%"></div>
+            <div class="hl3 rounded" style="margin-right: 2%; margin-bottom: 40px; margin-top: 2%; margin-left: -.5%"></div>
+            <script>
+                var none_counter_jul = 0;
+            </script>
             {% for item in events.items %}
-                <div class="row">
-                    <h4 class="bold text-center event-text" style="font-family: 'Playfair Display', serif; margin-left: 1%">{{ item.date_posted.strftime('%d') }}</h4>
-                    <div class="col" style="margin-top: -1%">
-                        <a class="bold nounderline" style="color: #035c7e; font-size: 1.25rem; line-height: 1.2" href="/">{{ item.title }}</a>
-                        <p class="line-clamp" style="margin-top: 1%; margin-bottom: 3%">
-                            {{ item.content }}
-                        </p>
+                {% if item.event_date.strftime('%m') == '07' %}
+                    <div class="row">
+                        <h4 class="text-center event-text" style="font-family: 'Playfair Display', serif; margin-left: 1%; margin-right: 1%">{{ item.event_date.strftime('%d') }}</h4>
+                        <div class="col" style="margin-top: -1%">
+                            <a class="bold nounderline" style="color: #035c7e; font-size: 1.25rem; line-height: 1.2" href="/">{{ item.title }}</a>
+                            <p class="line-clamp" style="margin-top: 1%; margin-bottom: 3%">
+                                {{ item.content }}
+                            </p>
+                        </div>
                     </div>
-                </div>
+                    <script>
+                        none_counter_jul = none_counter_jul + 1;
+                    </script>
+                {% endif %}
             {% endfor %}
+
+            <div class="row" id="no_events_jul">
+                <h4 class="text-center event-text" style="font-family: 'Playfair Display', serif; margin-left: 5%; margin-bottom: 30px; margin-top: -10px">No Events Found</h4>
+            </div>
+            <script>
+                console.log(none_counter_jul);
+                if (none_counter_jul === 0) {
+                    document.getElementById('no_events_jul').style.display = ""
+                } else {
+                    document.getElementById('no_events_jul').style.display = "none"
+                };
+            </script>
+
           </div>
-        </div>
+      </div>
 
 
   </div>

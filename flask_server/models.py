@@ -1,7 +1,7 @@
 from flask_server import db, login_manager
 from flask import current_app
 # can't import app object because we put it inside a function, have to use this flask thing
-from datetime import datetime
+import datetime
 from flask_login import UserMixin
 from itsdangerous import TimedJSONWebSignatureSerializer as Serializer
 # for making tokens for using emails
@@ -55,26 +55,33 @@ class Event(db.Model):
     id = db.Column(db.Integer, primary_key=True)
 
     title = db.Column(db.String(100), nullable=False)
-    date_posted = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
+    event_date = db.Column(db.DateTime, nullable=False, default=datetime.date(2020, 12, 28))
+
+    event_start = db.Column(db.Integer, default=7)
+    event_end = db.Column(db.Integer, default=8)
 
     content = db.Column(db.Text, nullable=False)
 
     def __repr__(self):
-        return f"Event('{self.title}', '{self.date_posted}')"
+        return self.event_date.strftime('%m')
     # returns this when object printed i.e. print('object')
+
+
+
+
 
 class News(db.Model):
     id = db.Column(db.Integer, primary_key=True)
 
     title = db.Column(db.String(100), nullable=False)
-    date_posted = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
+    news_date = db.Column(db.DateTime, nullable=False, default=datetime.date(2020, 12, 28))
 
     image_file = db.Column(db.String(20), nullable=False, default='default.jpg')
 
-    content = db.Column(db.Text, nullable=False)
+    content = db.Column(db.Text, nullable=False, default='avatar_img.png')
 
     def __repr__(self):
-        return f"News('{self.title}', '{self.date_posted}')"
+        return f"News('{self.title}', '{self.news_date}')"
 
     # returns this when object printed i.e. print('object')
 
