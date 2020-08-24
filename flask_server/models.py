@@ -44,8 +44,6 @@ class User(db.Model, UserMixin):
         return User.query.get(user_id)
         # if the token is valid then it gets the user with the user_id inside the token
 
-
-
     def __repr__(self):
         return f"User('{self.username}', '{self.email}', '{self.image_file}')"
         # this is what is returned when we print the object (i.e. print(object))
@@ -64,9 +62,6 @@ class Event(db.Model):
     def __repr__(self):
         return self.event_date.strftime('%m')
     # returns this when object printed i.e. print('object')
-
-
-
 
 
 class News(db.Model):
