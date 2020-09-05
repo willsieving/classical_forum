@@ -3,3 +3,7 @@ This website displays events, news, discussions, and contact information. Events
 
 Remember to use CTRL-F5 to update without browser cache
 -- Will not update CSS otherwise
+
+<img src='classical_forum2.png'>
+<img src='classical_forum1.png'>
+<img src='classical_forum3.png'>
