@@ -16,6 +16,10 @@ body, html {
   height: 100%;
 }
 
+.dropdown-menu > li > a:hover {
+    background-image: none;
+    background-color: rgba(81, 66, 66, 0.9);
+}
 
 .event-text {
    color: #014159;
@@ -170,6 +174,10 @@ body, html {
 .bg-steel {
   background: rgba(95, 76, 76, 0.9);
 
+}
+
+.dropdown-menu {
+	margin-top: 19px !important;
 }
 
 .navbar-dark .navbar-brand {
