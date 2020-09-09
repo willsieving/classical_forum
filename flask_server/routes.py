@@ -3,6 +3,7 @@ from flask_server import db
 #from flask_server.posts.forms import PostForm
 from flask_server.models import Event, News
 from flask_login import current_user, login_required
+from flask_server.forms import EventForm
 import datetime
 
 main = Blueprint('main', __name__)
@@ -50,16 +51,22 @@ def contact():
 @main.route('/event/new', methods=['GET', 'POST'])
 def new_event():
 
-    event = Event(title='July Test Event on the Fifteenth',
-                  event_date=datetime.datetime(year=2020, month=12, day=15, hour=14, minute=12, second=0),
-                  content='Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.',
-                  event_end=datetime.time(hour=16, minute=23, second=0))
-    # here we are getting the post's data from the forms and putting it in out previously created Post() model
-    db.session.add(event)
-    # adding post to database
-    db.session.commit()
+    form = EventForm()
 
-    return redirect(url_for('main.home'))
+    if form.validate_on_submit():
+        event = Event(title=form.title.data,
+                      event_date=form.event_date.data,
+                      content=form.content.data,
+                      event_end=form.event_end.data)
+        # here we are getting the post's data from the forms and putting it in out previously created Post() model
+        db.session.add(event)
+        # adding post to database
+        db.session.commit()
+        flash('Your event has been created!', 'success')
+        return redirect(url_for('main.upcoming_events'))
+
+    return render_template('new_event.html', title='New Event',
+                           form=form, legend='New Event')
 
 
 @main.route('/news/new', methods=['GET', 'POST'])

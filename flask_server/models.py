@@ -53,9 +53,9 @@ class Event(db.Model):
     id = db.Column(db.Integer, primary_key=True)
 
     title = db.Column(db.String(100), nullable=False)
-    event_date = db.Column(db.DateTime, nullable=False, default=datetime.datetime(year=2020, month=12, day=28, hour=11, minute=12, second=42))
+    event_date = db.Column(db.DateTime, nullable=False)
 
-    event_end = db.Column(db.Time, default=datetime.time(hour=15, minute=12, second=53))
+    event_end = db.Column(db.DateTime)
 
     content = db.Column(db.Text, nullable=False)
 
