@@ -1,21 +1,34 @@
 from flask import render_template, Blueprint, url_for, flash, redirect, request, abort
 from flask_server import db
 #from flask_server.posts.forms import PostForm
-from flask_server.models import Event, News
+from flask_server.models import Event, News, Emails
 from flask_login import current_user, login_required
-from flask_server.forms import EventForm
+from flask_server.forms import EventForm, EmailForm
 import datetime
+from sqlalchemy import select
 
 main = Blueprint('main', __name__)
 
 
-@main.route('/')
-@main.route('/home')
+@main.route('/', methods=['GET', 'POST'])
+@main.route('/home', methods=['GET', 'POST'])
 def home():
     db.create_all()
     events = Event.query.order_by(Event.event_date.desc()).paginate(page=1, per_page=2)
     current_datetime = datetime.datetime.utcnow()
-    return render_template('home.html', events=events, current_datetime=current_datetime)
+
+    form = EmailForm()
+
+    if form.validate_on_submit():
+        email = Emails(email=form.email.data)
+        # here we are getting the post's data from the forms and putting it in out previously created Post() model
+        db.session.add(email)
+        # adding post to database
+        db.session.commit()
+        flash('Your event has been created!', 'success')
+        return redirect(url_for('main.home'))
+
+    return render_template('home.html', events=events, current_datetime=current_datetime, form=form)
 
 
 @main.route('/discussion')
@@ -26,8 +39,21 @@ def discussion():
 @main.route('/past_events')
 def past_events():
     db.create_all()
-    events = Event.query.order_by(Event.event_date.asc()).paginate(page=1, per_page=10)
-    return render_template('past_events.html', events=events)
+    events = Event.query.order_by(Event.event_date.asc())
+
+    page = request.args.get('page', default=1, type=int)
+
+    month_list = ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12']
+    month_names = {'01': 'January', '02': 'February', '03': 'March', '04': 'April', '05': 'May', '06': 'June',
+                   '07': 'July', '08': 'August', '09': 'September', '10': 'October', '11': 'November', '12': 'December'}
+
+    current_year = datetime.datetime.today().strftime('%Y')
+    year_list = range(2017, int(current_year))
+
+    current_datetime = datetime.datetime.utcnow()
+    return render_template('past_events.html', events=events, current_datetime=current_datetime,
+                           page=page, month_list=month_list, month_names=month_names,
+                           year_list=reversed(year_list), current_year=int(current_year))
 
 
 @main.route('/upcoming_events')
