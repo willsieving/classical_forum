@@ -1,6 +1,8 @@
 @import "https://fonts.googleapis.com/css2?family=Amiri&display=swap";
 @import "https://fonts.googleapis.com/css2?family=Playfair+Display&display=swap";
 
+/*I know this is horribly messy and my styling is all over the place*/
+
 * {
   box-sizing: content-box;
 }

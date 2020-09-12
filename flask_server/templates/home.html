@@ -49,7 +49,7 @@
                 {% endif %}
             {% endfor %}
 
-            <a class="float-right event-text nounderline" href="/events">See More...</a>
+            <a class="float-right event-text nounderline" href="/upcoming_events">See More...</a>
         </div>
 
         <div style="padding: .5%"></div>
@@ -91,42 +91,40 @@
         <div style="padding: .5%"></div>
 
         <div class="col content-section inner" style="padding-top: 15px; min-width: 280px">
-            <h3 class="event-text" style="margin-left: 0%; margin-bottom: 3%">Discussions</h3>
+            <h3 class="event-text" style="margin-left: 0%; margin-bottom: 3%">Sign Up for Our Emails</h3>
 
     <!-- will post form to route that we are currently on (login) -->
             <form method="POST" action="">
                 {{ form.hidden_tag() }}
-                <fieldset class="form-group">
-                    <legend class="border-bottom mb4">{{ legend }}</legend>
-                    <!-- need form group for each attribute of the 'form' object-->
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+                <div class="row">
+                    <fieldset class="form-group" style="margin-left: 50px; margin-right: 50px">
+                        <!-- need form group for each attribute of the 'form' object-->
+                        <div class="form-group row">
+                            <div class="col-xs-3" style="margin-left: .5%">
+                                {% if form.email.errors %}
+                                    {{ form.email(class="form-control form-control-md is-invalid") }}
+                                    <div class="invalid-feedback">
+                                        {% for error in form.email.errors %}
+                                            <span>{{ error }}</span>
+                                        {% endfor %}
+                                    </div>
+                                         <!-- this is the invalid feedback of the form,
+                                        it uses an if statement to check if there are any errors with the 'email' attribute of the 'form' object,
+                                        if there are it prints the each error in a div class -->
+                                {% else %}
+                                    {{ form.email(class="form-control form-control-md") }}
+                                        <!-- ^ this is the valid feed of the form
+                                         that runs if there are no errors -->
+                                {% endif %}
 
-                    <div class="form-group row">
-                        <div class="col-xs-3" style="margin-left: .5%">
-                            {{ form.email.label(class="form-control-label") }}
-                            {% if form.email.errors %}
-                                {{ form.email(class="form-control form-control-md is-invalid") }}
-                                <div class="invalid-feedback">
-                                    {% for error in form.email.errors %}
-                                        <span>{{ error }}</span>
-                                    {% endfor %}
-                                </div>
-                                     <!-- this is the invalid feedback of the form,
-                                    it uses an if statement to check if there are any errors with the 'email' attribute of the 'form' object,
-                                    if there are it prints the each error in a div class -->
-                            {% else %}
-                                {{ form.email(class="form-control form-control-md") }}
-                                    <!-- ^ this is the valid feed of the form
-                                     that runs if there are no errors -->
-                            {% endif %}
-
-                        </div>
-                </fieldset>
-                <div class="form-group">
-                    {{ form.submit(class="btn btn-outline-info") }}
+                            </div>
+                    </fieldset>
+                    <div class="form-group row" style="margin-left: 10px">
+                        {{ form.submit(class="btn btn-outline-info btn-sm", style="max-height: 42px") }}
+                    </div>
                 </div>
             </form>
-
-            <a class="float-right event-text nounderline" href="/events">See More...</a>
         </div>
 
         <!--<div class="col inner" style="flex-grow: 0">

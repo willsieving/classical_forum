@@ -78,38 +78,39 @@
         </div>
       </nav>
     </header>
-    <main role="main" class="main-border">
+    <main role="main" class="main-border" style="margin-bottom: -50px">
         <div style="">
         {% block content %}{% endblock %}
+        </div>
+        <div style="background-color: rgba(136,117,119,0.55); height: 500px; margin: -50px; margin-top: 50px">
+            <div class="container">
+                <div class="row">
+                    <div class="column">
+                        <ul>
+                            <li>
+                                <a class="event-text nounderline" href="{{ url_for('main.home') }}">Berkely Undergrate Research</a>
+                            </li>
+                            <li>
+                                <a class="event-text nounderline" href="{{ url_for('main.home') }}">Berkeley Classics Department</a>
+                            </li>
+                            <li>
+                                <a class="event-text nounderline" href="{{ url_for('main.home') }}">Berkeley Link 3</a>
+                            </li>
+                            <li>
+                                <a class="event-text nounderline" href="{{ url_for('main.home') }}">Berkeley Link 4</a>
+                            </li>
+                            <li>
+                                <a class="event-text nounderline" href="{{ url_for('main.home') }}">Berkeley Link 5</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
         </div>
     </main>
     {% block end_background_div %}{% endblock %}
 
-{#    <div style="background-color: rgba(136,117,119,0.55); margin-top: 20%; height: 40%">#}
-{#        <div class="container">#}
-{#            <div class="row">#}
-{#                <div class="column">#}
-{#                    <ul>#}
-{#                        <li>#}
-{#                            <a class="event-text nounderline" href="{{ url_for('main.home') }}">Berkely Undergrate Research</a>#}
-{#                        </li>#}
-{#                        <li>#}
-{#                            <a class="event-text nounderline" href="{{ url_for('main.home') }}">Berkeley Classics Department</a>#}
-{#                        </li>#}
-{#                        <li>#}
-{#                            <a class="event-text nounderline" href="{{ url_for('main.home') }}">Berkeley Link 3</a>#}
-{#                        </li>#}
-{#                        <li>#}
-{#                            <a class="event-text nounderline" href="{{ url_for('main.home') }}">Berkeley Link 4</a>#}
-{#                        </li>#}
-{#                        <li>#}
-{#                            <a class="event-text nounderline" href="{{ url_for('main.home') }}">Berkeley Link 5</a>#}
-{#                        </li>#}
-{#                    </ul>#}
-{#                </div>#}
-{#            </div>#}
-{#        </div>#}
-{#    </div>#}
+
 
 
 
