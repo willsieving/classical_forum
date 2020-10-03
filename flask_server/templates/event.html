@@ -1,0 +1,38 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<div class="container-fluid" style="padding-top: 20px">
+<div class="row" style="flex-wrap: nowrap; margin-bottom: 20px; margin-left: -40px">
+    <div class="border-center rounded" style="float: left; width: 45%"></div>
+    <h1 class="text-center" style="color: #083443; margin-top: 0.8%">Event</h1>
+    <div class="border-center rounded" style="float: right; width: 45%"></div>
+</div>
+</div>
+    <div class="container">
+        <div class="row">
+            <div class="col" style="margin-top: -1%">
+                <h3 class="nounderline" style="color: #000000; margin-left: 5px">{{ title }}</h3>
+                {% if event.event_end == None %}
+                    <a class="" style="color: #035c7e; font-size: 1.25rem; line-height: 1.2; display: inline-block; margin-left: 20px;">{{ event.event_date.strftime('%I:%M %p') }}</a>
+
+                {% elif event.event_end.strftime('%d') == event.event_date.strftime('%d') %}
+                    <a class="" style="color: #035c7e; font-size: 1.25rem; line-height: 1.2; display: inline-block; margin-left: 20px;">{{ event.event_date.strftime('%I:%M %p') }} - {{ event.event_end.strftime('%I:%M %p') }}</a>
+
+                {% elif event.event_end.strftime('%Y') == event.event_date.strftime('%Y') %}
+                    <a class="" style="color: #035c7e; font-size: 1.25rem; line-height: 1.2; display: inline-block; margin-left: 20px;">{{ event.event_date.strftime('%I:%M %p') }} - {{ event.event_end.strftime('%I:%M %p') }} on {{ event.event_end.strftime('%b %d') }}</a>
+
+                {% else %}
+                    <a class="" style="color: #035c7e; font-size: 1.25rem; line-height: 1.2; display: inline-block; margin-left: 20px;">{{ event.event_date.strftime('%I:%M %p') }} - {{ event.event_end.strftime('%I:%M %p') }} on {{ event.event_end.strftime('%b %d, %Y') }}</a>
+
+                {% endif %}
+            </div>
+        </div>
+        <div class="content-section">
+
+            <p>{{ event.content }}</p>
+        </div>
+    </div>
+
+<div style="height: 1000px"></div>
+
+{% endblock content %}

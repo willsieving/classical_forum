@@ -81,6 +81,16 @@ def past_events():
                            year_list=reversed(year_list), current_year=int(current_year), year_selected=year_selected)
 
 
+@main.route('/event/<int:event_id>')
+# you can use a variable within the route name (here is will create a page for each post id)
+# you can specify whether the variable should should be an integer, string, etc, with 'int:' or 'string:'
+def event(event_id):
+    # have to pass in the variable in the definition
+    event_query = Event.query.get_or_404(event_id)
+    # get me the post with the ID of post_id (if none exists return a 404)
+    return render_template('event.html', title=event_query.title, event=event_query)
+
+
 # testing trying to get posting to work
 @main.route('/past_events', methods=['POST'])
 def year_post():
