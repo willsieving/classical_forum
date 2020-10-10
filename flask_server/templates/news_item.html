@@ -1,0 +1,27 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<div class="container-fluid" style="padding-top: 20px">
+<div class="row" style="flex-wrap: nowrap; margin-bottom: 20px; margin-left: -40px">
+    <div class="border-center rounded" style="float: left; width: 45%"></div>
+    <h1 class="text-center" style="color: #083443; margin-top: 0.8%">News</h1>
+    <div class="border-center rounded" style="float: right; width: 45%"></div>
+</div>
+</div>
+    <div class="container">
+        <div class="row">
+            <div class="col" style="margin-top: -1%">
+                <h3 class="nounderline" style="color: #000000; margin-left: 5px">{{ title }}</h3>
+                <a class="" style="color: #035c7e; font-size: 1.25rem; line-height: 1.2; display: inline-block; margin-left: 20px;">{{ news.news_date.strftime('%I:%M %p') }}</a>
+            </div>
+        </div>
+        <div class="content-section">
+
+            <p>{{ news.content }}</p>
+            <img class="" src="{{ url_for('static', filename='news_pictures/' + news.image_file) }}">
+        </div>
+    </div>
+
+<div style="height: 1000px"></div>
+
+{% endblock content %}

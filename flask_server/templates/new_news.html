@@ -1,0 +1,96 @@
+{% extends "layout.html" %}
+{% block start_background_div %}<div class="bg3">{% endblock start_background_div %}
+{% block end_background_div %}</div>{% endblock end_background_div %}
+
+{% block content %}
+
+<div class="container-fluid" style="padding-top: 20px">
+<div class="row" style="flex-wrap: nowrap; margin-bottom: 20px; margin-left: -40px">
+    <div class="border-center rounded" style="float: left; width: 45%"></div>
+    <h1 class="text-center" style="color: #083443; margin-top: 0.8%; min-width: 20%">Create New Event</h1>
+    <div class="border-center rounded" style="float: right; width: 45%"></div>
+</div>
+</div>
+
+<div class="content-section">
+    <!-- will post form to route that we are currently on (login) -->
+    <form method="POST" action="" enctype="multipart/form-data">
+        {{ form.hidden_tag() }}
+        <fieldset class="form-group">
+            <legend class="border-bottom mb4">{{ legend }}</legend>
+            <!-- need form group for each attribute of the 'form' object-->
+
+            <div class="form-group">
+                {{ form.title.label(class="form-control-label") }}
+                {% if form.title.errors %}
+                    {{ form.title(class="form-control form-control-lg is-invalid") }}
+                    <div class="invalid-feedback">
+                        {% for error in form.title.errors %}
+                            <span>{{ error }}</span>
+                        {% endfor %}
+                    </div>
+                         <!-- this is the invalid feedback of the form,
+                        it uses an if statement to check if there are any errors with the 'email' attribute of the 'form' object,
+                        if there are it prints the each error in a div class -->
+                {% else %}
+                    {{ form.title(class="form-control form-control-lg") }}
+                        <!-- ^ this is the valid feed of the form
+                         that runs if there are no errors -->
+                {% endif %}
+
+            </div>
+            <div class="form-group">
+                {{ form.picture.label() }}
+                {{ form.picture(class="form-control-file") }}
+                {% if form.picture.errors %}
+                    {% for error in form.picture.errors %}
+                        <span class="text-danger">{{ error }}</span></br>
+                    {% endfor %}
+                {% endif %}
+            </div>
+            <div class="form-group">
+                {{ form.news_date.label(class="form-control-label") }}
+
+                {% if form.news_date.errors %}
+                    {{ form.news_date(class="form-control form-control-lg is-invalid") }}
+                    <div class="invalid-feedback">
+                        {% for error in form.news_date.errors %}
+                            <span>{{ error }}</span>
+                        {% endfor %}
+                    </div>
+                         <!-- this is the invalid feedback of the form,
+                        it uses an if statement to check if there are any errors with the 'password' attribute of the 'form' object,
+                        if there are it prints the each error in a div class -->
+                {% else %}
+                    {{ form.news_date(class="form-control form-control-lg") }}
+                        <!-- ^ this is the valid feed of the form
+                         that runs if there are no errors -->
+                {% endif %}
+            </div>
+            <div class="form-group">
+                {{ form.content.label(class="form-control-label") }}
+
+                {% if form.content.errors %}
+                    {{ form.content(class="form-control form-control-lg is-invalid") }}
+                    <div class="invalid-feedback">
+                        {% for error in form.content.errors %}
+                            <span>{{ error }}</span>
+                        {% endfor %}
+                    </div>
+                         <!-- this is the invalid feedback of the form,
+                        it uses an if statement to check if there are any errors with the 'password' attribute of the 'form' object,
+                        if there are it prints the each error in a div class -->
+                {% else %}
+                    {{ form.content(class="form-control form-control-lg") }}
+                        <!-- ^ this is the valid feed of the form
+                         that runs if there are no errors -->
+                {% endif %}
+            </div>
+        </fieldset>
+        <div class="form-group">
+            {{ form.submit(class="btn btn-outline-info") }}
+        </div>
+    </form>
+</div>
+
+{% endblock content %}

@@ -28,9 +28,9 @@ class News(db.Model):
     id = db.Column(db.Integer, primary_key=True)
 
     title = db.Column(db.String(100), nullable=False)
-    news_date = db.Column(db.DateTime, nullable=False, default=datetime.date(2020, 12, 28))
+    news_date = db.Column(db.DateTime, nullable=False, default=datetime.datetime.utcnow())
 
-    image_file = db.Column(db.String(20), nullable=False, default='default.jpg')
+    image_file = db.Column(db.String(20))
 
     content = db.Column(db.Text, nullable=False, default='avatar_img.png')
 

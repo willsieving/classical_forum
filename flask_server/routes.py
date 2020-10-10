@@ -1,10 +1,53 @@
 from flask import render_template, Blueprint, url_for, flash, redirect, request, abort
 from flask_server import db
 from flask_server.models import Event, News, Emails
-from flask_server.forms import EventForm, EmailForm
+from flask_server.forms import EventForm, EmailForm, NewsForm
 import datetime
 
+from flask import Flask, flash, request, redirect, url_for
+from werkzeug.utils import secure_filename
+
+import secrets
+import os
+from PIL import Image
+# ^ helps us resize uploaded photos
+from flask import url_for, current_app
+# current app grabs the current app in use that is now hidden in a function in __init__
+
+
 # Please don't judge my sloppy code, tried to comment as best I could.
+
+
+
+
+def save_picture(form_picture):
+    random_hex = secrets.token_hex(8)
+    # use _ for unused variables (in this case the file's name)
+    # because the input of the form is a file,
+    # it has a filename attribute that can be split into the name and the extension
+    # (we want to keep the extension and rename the file with a random hex, adding the extension)
+
+    image_data = request.FILES[form_picture.name].read()
+
+    #### IDK WHAT TO DO
+
+    picture_fn = random_hex + '.jpg'
+    # creating picture name (random 8 digit hex + the extension)
+
+    picture_path = os.path.join(current_app.root_path, 'static/news_pictures/', picture_fn)
+    # creating the path into which the picture will be saved
+    # (i.e. root path of app + static/profile_pics/picture_name+extension)
+    output_size = (150, 150)
+    # here we set the size output for the resizer
+    i = Image.open(image_data)
+    # opening the inputted picture into the i variable
+    i = i.resize(size=output_size)
+    # reducing the size of i with output_size
+    i.save(picture_path)
+    # saving the newly resized picture to the created path
+    # no longer saves the large version of the image
+    return picture_fn
+    # returns the picture name
 
 
 main = Blueprint('main', __name__)
@@ -16,6 +59,7 @@ def home():
     db.create_all()
     # Creating database in case there isn't already one
     events = Event.query.order_by(Event.event_date.desc()).paginate(page=1, per_page=2)
+    news_query = News.query.order_by(News.news_date.desc()).paginate(page=1, per_page=2)
     # Query first two rows of event table in descending order
     current_datetime = datetime.datetime.utcnow()
     # Store current date in datetime obj
@@ -34,7 +78,7 @@ def home():
         # flashing not set up yet
         return redirect(url_for('main.home'))
 
-    return render_template('home.html', events=events, current_datetime=current_datetime, form=form)
+    return render_template('home.html', events=events, news=news_query, current_datetime=current_datetime, form=form)
 
 
 @main.route('/discussion')
@@ -91,6 +135,16 @@ def event(event_id):
     return render_template('event.html', title=event_query.title, event=event_query)
 
 
+@main.route('/news/<int:news_id>')
+# you can use a variable within the route name (here is will create a page for each post id)
+# you can specify whether the variable should should be an integer, string, etc, with 'int:' or 'string:'
+def news_item(news_id):
+    # have to pass in the variable in the definition
+    news_query = News.query.get_or_404(news_id)
+    # get me the post with the ID of post_id (if none exists return a 404)
+    return render_template('news_item.html', title=news_query.title, news=news_query)
+
+
 # testing trying to get posting to work
 @main.route('/past_events', methods=['POST'])
 def year_post():
@@ -142,14 +196,43 @@ def new_event():
                            form=form, legend='New Event')
 
 
-# Creates new row in the News tables of database
-# TO DO: Write HTML
+
+
+
+
+# Gets the data from the forms and and posts it to database
 @main.route('/news/new', methods=['GET', 'POST'])
 def new_news():
 
-    news = News(title='Test Event Title', content='Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.')
+    form = NewsForm()
 
-    db.session.add(news)
-    db.session.commit()
+    if form.validate_on_submit():
+        image_dir = os.path.join(os.getcwd(), "flask_server\\static\\news_pictures")
+        if form.picture.data:
+            picture_file = form.picture.data
 
-    return redirect(url_for('main.home'))
+            filename = secure_filename(picture_file.filename)
+
+            # Document and Profile photo save
+            picture_file.save(os.path.join(image_dir, filename))
+        else:
+            picture_file = None
+        if form.news_date.data:
+            news_date_entry = form.news_date.data
+        else:
+            news_date_entry = None
+
+        new_news = News(title=form.title.data,
+                        content=form.content.data,
+                        news_date=news_date_entry,
+                        image_file=picture_file.filename)
+
+        # here we are getting the data from the forms and putting it in the database
+        db.session.add(new_news)
+        # adding event to database
+        db.session.commit()
+        flash('Your event has been created!', 'success')
+        return redirect(url_for('main.home'))
+
+    return render_template('new_news.html', title='New Event',
+                           form=form, legend='New Event')

@@ -49,42 +49,36 @@
                 {% endif %}
             {% endfor %}
 
-            <a class="float-right event-text nounderline" href="/upcoming_events">See More...</a>
+            <a class="float-right event-text nounderline" href="{{ url_for('main.upcoming_events') }}">See More...</a>
         </div>
 
         <div style="padding: .5%"></div>
 
         <div class="col content-section inner" style="padding-top: 15px; min-width: 280px">
             <h3 class="event-text" style="margin-left: 0%; margin-bottom: 3%">News</h3>
-            <div class="row" style="margin-top: 20px; flex-basis: 0">
-                <div class="container d-flex" style="max-width: 10%">
-                    <div class="col align-self-center" style="margin-right: -15px; margin-left: -15px">
-                        <img src="{{ url_for('static', filename='img_avatar.png') }}">
+
+            {% for item in news.items %}
+                <div class="row" style="margin-top: 20px">
+                    <div class="container d-flex" style="max-width: 10%">
+                        <div class="col align-self-center" style="margin-right: -15px; margin-left: -15px">
+                            {%  if item.image_file %}
+                                <img src="{{ url_for('static', filename='profile_pics/' + item.image_file) }}">
+                            {% else %}
+                                <img src="{{ url_for('static', filename='img_avatar.png')}}">
+                            {% endif %}
+
+                        </div>
+                    </div>
+                    <div class="vl2 rounded" style="margin-bottom: 3%; margin-top: 3%"></div>
+
+                    <div class="col" style="margin-top: -10px">
+                        <a class="bold nounderline" style="color: #035c7e; font-size: 1.25rem; margin-bottom: .5rem; line-height: 1.2" href="{{ url_for('main.news_item', news_id=item.id) }}">{{ item.title }}</a>
+                        <p class="line-clamp" style="margin-top: 1%; margin-bottom: 3%">
+                            {{ item.content }}
+                        </p>
                     </div>
                 </div>
-
-                <div class="col" style="margin-top: -10px; margin-left: 10px">
-                    <a class="bold nounderline" style="color: #035c7e; font-size: 1.25rem; line-height: 1.2" href="/">Poetry Reading Live Online</a>
-                    <p class="line-clamp" style="margin-top: 1%; margin-bottom: 3%">
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
-                    </p>
-                </div>
-            </div>
-            <div class="row" style="margin-top: 20px">
-                <div class="container d-flex" style="max-width: 10%">
-                    <div class="col align-self-center" style="margin-right: -15px; margin-left: -15px">
-                        <img src="{{ url_for('static', filename='img_avatar.png') }}">
-                    </div>
-                </div>
-                <div class="vl2 rounded" style="margin-bottom: 3%; margin-top: 3%"></div>
-
-                <div class="col" style="margin-top: -10px">
-                    <a class="bold nounderline" style="color: #035c7e; font-size: 1.25rem; margin-bottom: .5rem; line-height: 1.2" href="/">Townsend Book Chat</a>
-                    <p class="line-clamp" style="margin-top: 1%; margin-bottom: 3%">
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
-                    </p>
-                </div>
-            </div>
+            {% endfor %}
             <a class="float-right event-text nounderline" href="{{ url_for('main.news') }}">See More...</a>
         </div>
 
