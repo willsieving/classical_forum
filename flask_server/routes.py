@@ -209,14 +209,24 @@ def new_news():
     if form.validate_on_submit():
         image_dir = os.path.join(os.getcwd(), "flask_server\\static\\news_pictures")
         if form.picture.data:
+            random_hex = secrets.token_hex(8)
             picture_file = form.picture.data
+            _, f_ext = os.path.splitext(picture_file.filename)
+            picture_fn = random_hex + f_ext
 
-            filename = secure_filename(picture_file.filename)
+            pic_filename = secure_filename(picture_fn)
 
             # Document and Profile photo save
-            picture_file.save(os.path.join(image_dir, filename))
+            # picture_file.save(os.path.join(image_dir, pic_filename))
+
+            output_size = [75, 75]
+            i = Image.open(picture_file)
+            i2 = i.resize(output_size)
+            i2.save(os.path.join(image_dir, pic_filename))
+
+
         else:
-            picture_file = None
+            pic_filename = None
         if form.news_date.data:
             news_date_entry = form.news_date.data
         else:
@@ -225,7 +235,7 @@ def new_news():
         new_news = News(title=form.title.data,
                         content=form.content.data,
                         news_date=news_date_entry,
-                        image_file=picture_file.filename)
+                        image_file=pic_filename)
 
         # here we are getting the data from the forms and putting it in the database
         db.session.add(new_news)

@@ -62,7 +62,7 @@
                     <div class="container d-flex" style="max-width: 10%">
                         <div class="col align-self-center" style="margin-right: -15px; margin-left: -15px">
                             {%  if item.image_file %}
-                                <img src="{{ url_for('static', filename='profile_pics/' + item.image_file) }}">
+                                <img src="{{ url_for('static', filename='news_pictures/' + item.image_file) }}">
                             {% else %}
                                 <img src="{{ url_for('static', filename='img_avatar.png')}}">
                             {% endif %}
