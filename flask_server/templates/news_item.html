@@ -16,9 +16,14 @@
             </div>
         </div>
         <div class="content-section">
-
-            <p>{{ news.content }}</p>
-            <img class="" src="{{ url_for('static', filename='news_pictures/' + news.image_file) }}">
+            <div class="row">
+                <div class="col-sm" style="margin-top: 5px">
+                    <img class="rounded" src="{{ url_for('static', filename='news_pictures/' + '1' + news.image_file) }}">
+                </div>
+                <div class="col-sm" style="margin-left: -300px">
+                    <p>{{ news.content }}</p>
+                </div>
+            </div>
         </div>
     </div>
 

@@ -58,7 +58,7 @@ main = Blueprint('main', __name__)
 def home():
     db.create_all()
     # Creating database in case there isn't already one
-    events = Event.query.order_by(Event.event_date.desc()).paginate(page=1, per_page=2)
+    events = Event.query.order_by(Event.event_date.desc()).paginate(page=1, per_page=3)
     news_query = News.query.order_by(News.news_date.desc()).paginate(page=1, per_page=2)
     # Query first two rows of event table in descending order
     current_datetime = datetime.datetime.utcnow()
@@ -164,8 +164,20 @@ def upcoming_events():
 @main.route('/news')
 def news():
     db.create_all()
-    news_db = News.query.order_by(News.news_date.desc()).paginate(page=1, per_page=10)
-    return render_template('news.html', news=news_db)
+    news_db = News.query.order_by(News.news_date.desc()).paginate(page=1)
+
+    current_year = datetime.datetime.today().strftime('%Y')
+    # storing current year in a variable
+
+    year_list = range(2017, int(current_year))
+    # make the sure the list of years can increase as current year increases
+
+    current_datetime = datetime.datetime.utcnow()
+
+    year_selected = '2020'
+
+    return render_template('news.html', news=news_db, current_year=current_year, year_list=year_list,
+                           current_datetime=current_datetime, year_selected=year_selected)
 
 
 # TO DO
@@ -219,10 +231,13 @@ def new_news():
             # Document and Profile photo save
             # picture_file.save(os.path.join(image_dir, pic_filename))
 
-            output_size = [75, 75]
+            output_size_thumbnail = [75, 75]
+            output_size_page = [400, 400]
             i = Image.open(picture_file)
-            i2 = i.resize(output_size)
+            i2 = i.resize(output_size_thumbnail)
+            i3 = i.resize(output_size_page)
             i2.save(os.path.join(image_dir, pic_filename))
+            i3.save(os.path.join(image_dir, '1'+pic_filename))
 
 
         else:

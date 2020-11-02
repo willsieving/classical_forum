@@ -30,9 +30,9 @@ class News(db.Model):
     title = db.Column(db.String(100), nullable=False)
     news_date = db.Column(db.DateTime, nullable=False, default=datetime.datetime.utcnow())
 
-    image_file = db.Column(db.String(20))
+    image_file = db.Column(db.String(20), default='news.png')
 
-    content = db.Column(db.Text, nullable=False, default='avatar_img.png')
+    content = db.Column(db.Text, nullable=False)
 
     def __repr__(self):
         return f"News('{self.title}', '{self.news_date}')"
