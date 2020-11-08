@@ -109,19 +109,19 @@ def past_events():
     current_datetime = datetime.datetime.utcnow()
     # current datetime
 
-    # ignore below, testing
-    print('here', request.method)
     if request.method == 'POST':
-        if 'submit_button' in request.form:
-            user_answer = request.form['event_year']
-            return user_answer
+        year_selected = int(request.form['event_year'])
+        str_year_sel = request.form['event_year']
+    else:
+        year_selected = 2020
+        str_year_sel = '2020'
 
     # once the inputs work this variable will be what the user selects on the year selection
-    year_selected = '2020'
+
 
     # pass all the objs and variables into the html page
     return render_template('past_events.html', events=events, current_datetime=current_datetime,
-                           page=page, month_list=month_list, month_names=month_names,
+                           page=page, month_list=month_list, month_names=month_names, str_year_sel=str_year_sel,
                            year_list=reversed(year_list), current_year=int(current_year), year_selected=year_selected)
 
 
@@ -143,13 +143,6 @@ def news_item(news_id):
     news_query = News.query.get_or_404(news_id)
     # get me the post with the ID of post_id (if none exists return a 404)
     return render_template('news_item.html', title=news_query.title, news=news_query)
-
-
-# testing trying to get posting to work
-@main.route('/past_events', methods=['POST'])
-def year_post():
-    year = request.form.getlist('event_year')
-    print(year)
 
 
 # TO DO

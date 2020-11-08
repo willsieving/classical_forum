@@ -16,23 +16,51 @@
 <div class="row">
 <div class="col-md-2" style="margin-top: 2%; padding-left: 2%">
   <h5 class="text-center">Year</h5>
-  <form name="year" class="list-group btn-group btn-group-toggle" data-toggle="buttons" action="{{ url_for('main.home') }}" method="POST">
+
+
+
+  <form name="year" id="year" class="list-group btn-group btn-group-toggle" data-toggle="buttons" action="{{ url_for('main.past_events') }}" method="POST">
+    <div class="hl" style=""></div>
+
+
+
+    {% if year_selected == current_year %}
+        <label class="btn btn-events rounded active" style="margin-left: -1px">
+            <input type="radio" name="event_year" value="{{ current_year }}" checked="checked" /> {{ current_year }}
+        </label>
+        <div style="padding-bottom: 0px"></div>
+    {% else %}
+        <label class="btn btn-events rounded" style="margin-left: -1px">
+            <input type="radio" name="event_year" value="{{ current_year }}" /> {{ current_year }}
+        </label>
+        <div style="padding-bottom: 0px"></div>
+    {% endif %}
+
+    {% for year in year_list %}
+    {% if year_selected == year %}
     <div class="hl" style=""></div>
     <label class="btn btn-events rounded active" style="margin-left: -1px">
-        <input type="radio" name="event_year" id="{{ current_year }}" value="{{ current_year }}" autocomplete="off" checked> {{ current_year }}
+        <input type="radio" name="event_year" value="{{ year }}" checked="checked"/> {{ year }}
     </label>
     <div style="padding-bottom: 0px"></div>
-    {% for year in year_list %}
+    {% else %}
     <div class="hl" style=""></div>
     <label class="btn btn-events rounded" style="margin-left: -1px">
-        <input type="radio" name="event_year" id="{{ year }}" value="{{ year }}" autocomplete="off"> {{ year }}
+        <input type="radio" name="event_year" value="{{ year }}" /> {{ year }}
     </label>
     <div style="padding-bottom: 0px"></div>
+    {% endif %}
     {% endfor %}
-{#    <div class="hl" style=""></div>#}
-{#      <input class="text-center align-center" type="submit" name="submit_button" style="max-width: 2%;">#}
-{#    <div style="padding-bottom: 0px"></div>#}
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+    <script type='text/javascript'>
 
+         $(document).ready(function() {
+           $('input[name=event_year]').change(function(){
+                $('form').submit();
+           });
+          });
+
+    </script>
   </form>
 </div>
 
@@ -41,7 +69,7 @@
   <div class="col" style="margin: 3%">
     <div class="row" style="width: 90%">
         {% for month in month_list %}
-          {% if year_selected == current_datetime.strftime('%Y') %}
+          {% if str_year_sel == current_datetime.strftime('%Y') %}
               <!-- have to find a way to get access to what year is currently selected --->
               <div class="row" style="width: 120%">
                   <div class="col">
@@ -52,7 +80,7 @@
                         var none_counter = 0;
                     </script>
                     {% for item in events %}
-                        {% if item.event_date.strftime('%Y') == year_selected%}
+                        {% if item.event_date.strftime('%Y') == str_year_sel %}
                             <!-- need to add currently selected year here too -->
                             {% if item.event_date.strftime('%m') == month %}
                                 <div class="row">
