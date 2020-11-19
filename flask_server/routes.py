@@ -58,10 +58,12 @@ main = Blueprint('main', __name__)
 def home():
     db.create_all()
     # Creating database in case there isn't already one
-    events = Event.query.order_by(Event.event_date.desc()).paginate(page=1, per_page=3)
+    current_datetime = datetime.datetime.utcnow()
+    events = Event.query.order_by(Event.event_date.asc()).filter(Event.event_date >= current_datetime).paginate(page=1)
+
     news_query = News.query.order_by(News.news_date.desc()).paginate(page=1, per_page=2)
     # Query first two rows of event table in descending order
-    current_datetime = datetime.datetime.utcnow()
+
     # Store current date in datetime obj
 
     form = EmailForm()
@@ -154,7 +156,7 @@ def upcoming_events():
 
 
 # TO DO
-@main.route('/news')
+@main.route('/news', methods=['GET', 'POST'])
 def news():
     db.create_all()
     news_db = News.query.order_by(News.news_date.desc()).paginate(page=1)
@@ -162,15 +164,21 @@ def news():
     current_year = datetime.datetime.today().strftime('%Y')
     # storing current year in a variable
 
-    year_list = range(2017, int(current_year))
+    year_list = list(range(2017, int(current_year)))
     # make the sure the list of years can increase as current year increases
+    year_list.reverse()
+
+    if request.method == 'POST':
+        year_selected = int(request.form['news_year'])
+        str_year_sel = request.form['news_year']
+    else:
+        year_selected = 2020
+        str_year_sel = '2020'
 
     current_datetime = datetime.datetime.utcnow()
 
-    year_selected = '2020'
-
     return render_template('news.html', news=news_db, current_year=current_year, year_list=year_list,
-                           current_datetime=current_datetime, year_selected=year_selected)
+                           current_datetime=current_datetime, year_selected=year_selected, str_year_sel=str_year_sel)
 
 
 # TO DO

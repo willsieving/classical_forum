@@ -69,7 +69,6 @@
   <div class="col" style="margin: 3%">
     <div class="row" style="width: 90%">
         {% for month in month_list %}
-          {% if str_year_sel == current_datetime.strftime('%Y') %}
               <!-- have to find a way to get access to what year is currently selected --->
               <div class="row" style="width: 120%">
                   <div class="col">
@@ -130,7 +129,6 @@
 
                   </div>
               </div>
-          {% endif %}
         {% endfor %}
     </div>
   </div>
