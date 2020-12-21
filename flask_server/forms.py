@@ -12,7 +12,7 @@ class EventForm(FlaskForm):
     event_date = DateTimeField('Event Date & Start Time - Format = %Y-%m-%d %H:%M:%S', validators=[DataRequired()])
     event_end = DateTimeField('Event End Date - Format = %Y-%m-%d %H:%M:%S - NOT Required', validators=[Optional()])
     content = TextAreaField('Event Description', validators=[DataRequired()])
-    submit = SubmitField('Create Event')
+    submit = SubmitField('Submit')
 
 
 class NewsForm(FlaskForm):
@@ -22,7 +22,7 @@ class NewsForm(FlaskForm):
     news_date = DateTimeField('Manually set date and time posted - Format = %Y-%m-%d %H:%M:%S --- Default is time of posting (Optional)', validators=[Optional()])
     picture = FileField('Update Profile Picture (Optional)', validators=[FileAllowed(['jpg', 'png']), Optional()])
     content = TextAreaField('Event Description (Required)', validators=[DataRequired()])
-    submit = SubmitField('Create Event')
+    submit = SubmitField('Submit')
 
 
 class EmailForm(FlaskForm):

@@ -151,7 +151,8 @@ def news_item(news_id):
 @main.route('/upcoming_events')
 def upcoming_events():
     db.create_all()
-    events = Event.query.order_by(Event.event_date.desc()).paginate(page=1, per_page=10)
+    current_datetime = datetime.datetime.utcnow()
+    events = Event.query.order_by(Event.event_date.asc()).filter(Event.event_date >= current_datetime).paginate(page=1)
     return render_template('upcoming_events.html', events=events)
 
 
@@ -208,7 +209,32 @@ def new_event():
     return render_template('new_event.html', title='New Event',
                            form=form, legend='New Event')
 
+@main.route('/event/<int:event_id>/update', methods=['GET', 'POST'])
+def update_event(event_id):
+    event = Event.query.get_or_404(event_id)
+    form = EventForm()
+    if form.validate_on_submit():
+        event_date_obj = datetime.datetime.strptime(str(form.event_date.data), '%Y-%m-%d %H:%M:%S')
+        event_end_obj = datetime.datetime.strptime(str(form.event_end.data), '%Y-%m-%d %H:%M:%S')
+        event.title = form.title.data
+        event.content = form.content.data
+        event.event_date = event_date_obj
+        event.event_end = event_end_obj
+        # here we set the value of things already in the database, so we don't need a db.session.add
+        # only to commit the changes
+        db.session.commit()
+        flash('Your post has been updated!', 'success')
+        return redirect(url_for('main.event', event_id=event.id))
+    elif request.method == 'GET':
+        form.title.data = event.title
+        # fill in the form with the content of the post (so it can be edited)
+        # if the request is a get request which it should always be
+        form.content.data = event.content
+        form.event_date.data = event.event_date
+        form.event_end.data = event.event_end
 
+    return render_template('new_event.html', title='Update Event',
+                           form=form, legend='Update Event')
 
 
 
