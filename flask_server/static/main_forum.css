@@ -116,7 +116,7 @@ body, html {
 .content-section {
   background: rgba(255, 254, 252, 0.8);
   padding: 10px 20px;
-  border: 1px solid #dddddd;
+  border: 0px solid #dddddd;
   border-radius: 3px;
   margin-top: 20px;
 }

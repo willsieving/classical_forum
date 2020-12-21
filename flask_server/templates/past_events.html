@@ -70,7 +70,7 @@
     <div class="row" style="width: 90%">
         {% for month in month_list %}
               <!-- have to find a way to get access to what year is currently selected --->
-              <div class="row" style="width: 120%">
+              <div class="row" style="width: 120%" id="no_events_{{ month }}">
                   <div class="col">
 
                     <h5 class="align-self-center" style="width: 7%; margin-left: -.5%">{{ month_names[month] }}</h5>
@@ -116,14 +116,11 @@
                         {% endif %}
                     {% endfor %}
 
-                    <div class="row" style="" id="no_events_{{ month }}">
-                        <h4 class="text-center event-text" style="font-family: 'Playfair Display', serif; margin-left: 5%; margin-bottom: 30px; margin-top: -10px">No Events Found</h4>
-                    </div>
                     <script>
                         if (none_counter === 0) {
-                            document.getElementById('no_events_{{ month }}').style.display = "";
-                        } else {
                             document.getElementById('no_events_{{ month }}').style.display = "none";
+                        } else {
+                            document.getElementById('no_events_{{ month }}').style.display = "";
                         };
                     </script>
 

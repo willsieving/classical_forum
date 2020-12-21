@@ -237,6 +237,57 @@ def update_event(event_id):
                            form=form, legend='Update Event')
 
 
+@main.route('/event/<int:event_id>/delete', methods=['POST', 'GET'])
+def delete_event(event_id):
+    event = Event.query.get_or_404(event_id)
+
+    db.session.delete(event)
+    # deleting the post from the database
+    db.session.commit()
+    # committing the changes
+    flash('Your post has been deleted!', 'success')
+    # flashing a success message
+    return redirect(url_for('main.home'))
+    # redirecting to the home page
+
+
+@main.route('/news/<int:news_id>/update', methods=['GET', 'POST'])
+def update_news(news_id):
+    news = News.query.get_or_404(news_id)
+    form = NewsForm()
+    if form.validate_on_submit():
+        news_date_obj = datetime.datetime.strptime(str(form.news_date.data), '%Y-%m-%d %H:%M:%S')
+        news.title = form.title.data
+        news.content = form.content.data
+        news.news_date = news_date_obj
+        # here we set the value of things already in the database, so we don't need a db.session.add
+        # only to commit the changes
+        db.session.commit()
+        flash('Your post has been updated!', 'success')
+        return redirect(url_for('main.news_item', news_id=news.id))
+    elif request.method == 'GET':
+        form.title.data = news.title
+        # fill in the form with the content of the post (so it can be edited)
+        # if the request is a get request which it should always be
+        form.content.data = news.content
+        form.news_date.data = news.news_date
+
+    return render_template('new_news.html', title='Update News',
+                           form=form, legend='Update News')
+
+
+@main.route('/news/<int:news_id>/delete', methods=['POST', 'GET'])
+def delete_news(news_id):
+    news = News.query.get_or_404(news_id)
+
+    db.session.delete(news)
+    # deleting the post from the database
+    db.session.commit()
+    # committing the changes
+    flash('Your post has been deleted!', 'success')
+    # flashing a success message
+    return redirect(url_for('main.home'))
+    # redirecting to the home page
 
 
 # Gets the data from the forms and and posts it to database

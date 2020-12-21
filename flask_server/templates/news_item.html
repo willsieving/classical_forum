@@ -22,6 +22,8 @@
                 </div>
                 <div class="col-sm" style="margin-left: -300px">
                     <p>{{ news.content }}</p>
+                    <a class="bold nounderline" style="color: #035c7e; font-size: 1.25rem; margin-bottom: .5rem; line-height: 1.2" href="{{ url_for('main.update_news', news_id=news.id) }}">Edit</a>
+                    <a class="bold nounderline" style="color: #035c7e; font-size: 1.25rem; margin-bottom: .5rem; line-height: 1.2" href="{{ url_for('main.delete_news', news_id=news.id) }}">Delete</a>
                 </div>
             </div>
         </div>
