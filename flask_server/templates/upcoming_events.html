@@ -1,5 +1,5 @@
 {% extends "layout.html" %}
-{% block start_background_div %}<div class="bg3">{% endblock start_background_div %}
+{% block start_background_div %}<div class="bg1">{% endblock start_background_div %}
 {% block end_background_div %}</div>{% endblock end_background_div %}
 
 {% block content %}
@@ -14,7 +14,7 @@
 
 
 {% for item in events.items %}
-    <div class="row content-section" style="">
+    <div class="shadow-sm row content-section" style="">
         <div class="" style="margin-top: 0%"></div>
 
         <div class="col" style="margin-top: 2%">
@@ -32,7 +32,5 @@
         </div>
     </div>
 {% endfor %}
-
-<div style="height: 1000px"></div>
 
 {% endblock content %}

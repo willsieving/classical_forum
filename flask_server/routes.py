@@ -83,11 +83,6 @@ def home():
     return render_template('home.html', events=events, news=news_query, current_datetime=current_datetime, form=form)
 
 
-@main.route('/discussion')
-def discussion():
-    return render_template('discussion.html')
-
-
 @main.route('/past_events', methods=['GET', 'POST'])
 def past_events():
     db.create_all()
@@ -124,7 +119,8 @@ def past_events():
     # pass all the objs and variables into the html page
     return render_template('past_events.html', events=events, current_datetime=current_datetime,
                            page=page, month_list=month_list, month_names=month_names, str_year_sel=str_year_sel,
-                           year_list=reversed(year_list), current_year=int(current_year), year_selected=year_selected)
+                           year_list=reversed(year_list), current_year=int(current_year), year_selected=year_selected,
+                           title='Past Events')
 
 
 @main.route('/event/<int:event_id>')
@@ -153,7 +149,7 @@ def upcoming_events():
     db.create_all()
     current_datetime = datetime.datetime.utcnow()
     events = Event.query.order_by(Event.event_date.asc()).filter(Event.event_date >= current_datetime).paginate(page=1)
-    return render_template('upcoming_events.html', events=events)
+    return render_template('upcoming_events.html', events=events, title='Upcoming Events')
 
 
 # TO DO
@@ -179,13 +175,14 @@ def news():
     current_datetime = datetime.datetime.utcnow()
 
     return render_template('news.html', news=news_db, current_year=current_year, year_list=year_list,
-                           current_datetime=current_datetime, year_selected=year_selected, str_year_sel=str_year_sel)
+                           current_datetime=current_datetime, year_selected=year_selected, str_year_sel=str_year_sel,
+                           title='News')
 
 
 # TO DO
 @main.route('/contact')
 def contact():
-    return render_template('contact.html')
+    return render_template('contact.html', title='Contact')
 
 
 # Gets the data from the forms and and posts it to database
@@ -256,7 +253,7 @@ def update_news(news_id):
     news = News.query.get_or_404(news_id)
     form = NewsForm()
     if form.validate_on_submit():
-        news_date_obj = datetime.datetime.strptime(str(form.news_date.data), '%Y-%m-%d %H:%M:%S')
+        news_date_obj = datetime.datetime.strptime(str(form.start_date.data) + ' ' + str(form.start_time.date), '%Y-%m-%d %H:%M:%S')
         news.title = form.title.data
         news.content = form.content.data
         news.news_date = news_date_obj
@@ -270,7 +267,8 @@ def update_news(news_id):
         # fill in the form with the content of the post (so it can be edited)
         # if the request is a get request which it should always be
         form.content.data = news.content
-        form.news_date.data = news.news_date
+        form.start_date.data = news.news_date
+        form.start_time.data = news.news_date
 
     return render_template('new_news.html', title='Update News',
                            form=form, legend='Update News')
@@ -316,12 +314,10 @@ def new_news():
             i3 = i.resize(output_size_page)
             i2.save(os.path.join(image_dir, pic_filename))
             i3.save(os.path.join(image_dir, '1'+pic_filename))
-
-
         else:
             pic_filename = None
-        if form.news_date.data:
-            news_date_entry = form.news_date.data
+        if form.start_date.data and form.start_time.data:
+            news_date_entry = datetime.datetime.strptime(str(form.start_date.data) + ' ' + str(form.start_time.data), "%Y-%m-%d %H:%M:%S")
         else:
             news_date_entry = None
 
@@ -337,5 +333,5 @@ def new_news():
         flash('Your event has been created!', 'success')
         return redirect(url_for('main.home'))
 
-    return render_template('new_news.html', title='New Event',
-                           form=form, legend='New Event')
+    return render_template('new_news.html', title='New News',
+                           form=form, legend='New News')

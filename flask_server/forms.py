@@ -2,7 +2,7 @@ from flask_wtf import FlaskForm
 from flask_wtf.file import FileField, FileAllowed
 from wtforms import StringField, SubmitField, TextAreaField, DateTimeField
 from wtforms.validators import DataRequired, Optional
-from wtforms.fields.html5 import EmailField
+from wtforms.fields.html5 import EmailField, DateField, TimeField
 
 
 class EventForm(FlaskForm):
@@ -19,7 +19,8 @@ class NewsForm(FlaskForm):
     # this is the form for creating a new event
     # all the boxes correspond to a column in the 'Event' table
     title = StringField('News Headline (Required)', validators=[DataRequired()])
-    news_date = DateTimeField('Manually set date and time posted - Format = %Y-%m-%d %H:%M:%S --- Default is time of posting (Optional)', validators=[Optional()])
+    start_date = DateField(validators=[DataRequired()])
+    start_time = TimeField(validators=[DataRequired()])
     picture = FileField('Update Profile Picture (Optional)', validators=[FileAllowed(['jpg', 'png']), Optional()])
     content = TextAreaField('Event Description (Required)', validators=[DataRequired()])
     submit = SubmitField('Submit')

@@ -11,6 +11,11 @@
   box-sizing: content-box;
 }
 
+.form-control-lg {
+  height: 150px;
+  width: 100%;
+}
+
 body, html {
   background: #fafafa;
   color: #333333;
@@ -21,6 +26,7 @@ body, html {
 .dropdown-menu > li > a:hover {
     background-image: none;
     background-color: rgba(81, 66, 66, 0.9);
+    width: 100%;
 }
 
 .event-text {

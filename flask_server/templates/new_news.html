@@ -7,7 +7,7 @@
 <div class="container-fluid" style="padding-top: 20px">
 <div class="row" style="flex-wrap: nowrap; margin-bottom: 20px; margin-left: -40px">
     <div class="border-center rounded" style="float: left; width: 45%"></div>
-    <h1 class="text-center" style="color: #083443; margin-top: 0.8%; min-width: 20%">Create New Event</h1>
+    <h1 class="text-center" style="color: #083443; margin-top: 0.8%; min-width: 20%">Create New News</h1>
     <div class="border-center rounded" style="float: right; width: 45%"></div>
 </div>
 </div>
@@ -23,7 +23,7 @@
             <div class="form-group">
                 {{ form.title.label(class="form-control-label") }}
                 {% if form.title.errors %}
-                    {{ form.title(class="form-control form-control-lg is-invalid") }}
+                    {{ form.title(class="is-invalid") }}
                     <div class="invalid-feedback">
                         {% for error in form.title.errors %}
                             <span>{{ error }}</span>
@@ -33,7 +33,7 @@
                         it uses an if statement to check if there are any errors with the 'email' attribute of the 'form' object,
                         if there are it prints the each error in a div class -->
                 {% else %}
-                    {{ form.title(class="form-control form-control-lg") }}
+                    {{ form.title(class="") }}
                         <!-- ^ this is the valid feed of the form
                          that runs if there are no errors -->
                 {% endif %}
@@ -49,12 +49,12 @@
                 {% endif %}
             </div>
             <div class="form-group">
-                {{ form.news_date.label(class="form-control-label") }}
+                {{ form.start_date.label(class="form-control-label") }}
 
-                {% if form.news_date.errors %}
-                    {{ form.news_date(class="form-control form-control-lg is-invalid") }}
+                {% if form.start_date.errors %}
+                    {{ form.start_date(class="is-invalid") }}
                     <div class="invalid-feedback">
-                        {% for error in form.news_date.errors %}
+                        {% for error in form.start_date.errors %}
                             <span>{{ error }}</span>
                         {% endfor %}
                     </div>
@@ -62,7 +62,26 @@
                         it uses an if statement to check if there are any errors with the 'password' attribute of the 'form' object,
                         if there are it prints the each error in a div class -->
                 {% else %}
-                    {{ form.news_date(class="form-control form-control-lg") }}
+                    {{ form.start_date(class="datepicker") }}
+                        <!-- ^ this is the valid feed of the form
+                         that runs if there are no errors -->
+                {% endif %}
+            </div>
+            <div class="form-group">
+                {{ form.start_time.label(class="form-control-label") }}
+
+                {% if form.start_time.errors %}
+                    {{ form.start_time(class="is-invalid") }}
+                    <div class="invalid-feedback">
+                        {% for error in form.start_time.errors %}
+                            <span>{{ error }}</span>
+                        {% endfor %}
+                    </div>
+                         <!-- this is the invalid feedback of the form,
+                        it uses an if statement to check if there are any errors with the 'password' attribute of the 'form' object,
+                        if there are it prints the each error in a div class -->
+                {% else %}
+                    {{ form.start_time(class="") }}
                         <!-- ^ this is the valid feed of the form
                          that runs if there are no errors -->
                 {% endif %}
@@ -71,7 +90,7 @@
                 {{ form.content.label(class="form-control-label") }}
 
                 {% if form.content.errors %}
-                    {{ form.content(class="form-control form-control-lg is-invalid") }}
+                    {{ form.content(class="is-invalid") }}
                     <div class="invalid-feedback">
                         {% for error in form.content.errors %}
                             <span>{{ error }}</span>
@@ -81,7 +100,7 @@
                         it uses an if statement to check if there are any errors with the 'password' attribute of the 'form' object,
                         if there are it prints the each error in a div class -->
                 {% else %}
-                    {{ form.content(class="form-control form-control-lg") }}
+                    {{ form.content(class="form-control-lg") }}
                         <!-- ^ this is the valid feed of the form
                          that runs if there are no errors -->
                 {% endif %}

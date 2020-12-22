@@ -1,4 +1,7 @@
 {% extends "layout.html" %}
+{% block start_background_div %}<div class="bg1">{% endblock start_background_div %}
+{% block end_background_div %}</div>{% endblock end_background_div %}
+
 
 {% block content %}
 <div class="container-fluid" style="padding-top: 20px">
@@ -15,7 +18,7 @@
                 <a class="" style="color: #035c7e; font-size: 1.25rem; line-height: 1.2; display: inline-block; margin-left: 20px;">{{ news.news_date.strftime('%I:%M %p') }}</a>
             </div>
         </div>
-        <div class="content-section">
+        <div class="shadow-sm content-section">
             <div class="row">
                 <div class="col-sm" style="margin-top: 5px">
                     <img class="rounded" src="{{ url_for('static', filename='news_pictures/' + '1' + news.image_file) }}">

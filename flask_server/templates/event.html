@@ -1,4 +1,7 @@
 {% extends "layout.html" %}
+{% block start_background_div %}<div class="bg1">{% endblock start_background_div %}
+{% block end_background_div %}</div>{% endblock end_background_div %}
+
 
 {% block content %}
 <div class="container-fluid" style="padding-top: 20px">
@@ -27,7 +30,7 @@
                 {% endif %}
             </div>
         </div>
-        <div class="content-section">
+        <div class="shadow-sm content-section">
 
             <p>{{ event.content }}</p>
             <a class="bold nounderline" style="color: #035c7e; font-size: 1.25rem; margin-bottom: .5rem; line-height: 1.2" href="{{ url_for('main.update_event', event_id=event.id) }}">Edit</a>

@@ -4,7 +4,7 @@
 
 {% block content %}
 
-<div class="container-fluid" style="padding-top: 20px">
+<div class="container-fluid" style="padding-top: 20px; padding-bottom: 10px">
     <div class="row" style="flex-wrap: nowrap; margin-bottom: 0px">
         <div class="border-center rounded"></div>
         <h1 class="text-center" style="color: #083443; margin-top: 0.8%; min-width: 37%; font-size: 40px">Welcome to The Classical Forum</h1>
@@ -42,7 +42,7 @@
         </div>
 
         <div class="col-lg" style="margin-bottom: -10px">
-            <div class="content-section" style="max-height: 550px; border: 0px; margin-top: 10px; margin-bottom: -10px; height: 93%">
+            <div class="shadow-sm content-section" style="max-height: 550px; border: 0px; margin-top: 10px; margin-bottom: -10px; height: 93%">
                 <h3 class="event-text" style="margin-left: 0%; margin-bottom: 3%">Upcoming Events</h3>
                 {% for item in events.items[:3] %}
                         <div class="row" style="margin-top: 20px; flex-basis: 0">
@@ -69,14 +69,14 @@
         </div>
     </div>
     <div class="row" style="padding-top: 5px; margin-bottom: 3%">
-    <div class="col content-section inner" style="padding-top: 15px; min-width: 280px">
+    <div class="shadow-sm col content-section inner" style="padding-top: 15px; min-width: 280px">
         <p class="line-clamp-para" style="font-size: larger">The Classical Forum facilitates events related to the study of Classics. Our purpose is to create a community at UC Berkeley between professors, graduate students, and undergraduate students through events. <br> <br> Sign up for the Classical Forum's e-mail list. By joining the list, you will receive invitations to upcoming events, as well as general postings for related lectures, conferences, and symposia.</p>
     </div>
 
 
         <div style="padding: .5%"></div>
 
-        <div class="col content-section inner" style="padding-top: 15px; min-width: 280px">
+        <div class="shadow-sm col content-section inner" style="padding-top: 15px; min-width: 280px">
             <h3 class="event-text" style="margin-left: 0%; margin-bottom: 3%">News</h3>
 
             {% for item in news.items %}
@@ -108,7 +108,7 @@
 
         <div style="padding: .5%"></div>
 
-        <div class="col content-section inner" style="padding-top: 15px; min-width: 280px">
+        <div class="shadow-sm col content-section inner" style="padding-top: 15px; min-width: 280px">
             <h3 class="event-text" style="margin-left: 0%; margin-bottom: 3%">Sign Up for Our Emails</h3>
 
     <!-- will post form to route that we are currently on (login) -->
@@ -144,13 +144,6 @@
                 </div>
             </form>
         </div>
-
-        <!--<div class="col inner" style="flex-grow: 0">
-            <h6>Announcements</h6>
-        </div>
-        <div class="col inner" style="flex-grow: 0">
-            <h6>Discussions</h6>
-        </div>  -->
     </div>
 </div>
 {% endblock content %}
