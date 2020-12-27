@@ -4,6 +4,8 @@ from flask_server.models import Event, News, Emails
 from flask_server.forms import EventForm, EmailForm, NewsForm
 import datetime
 
+from sqlalchemy import func
+
 from flask import Flask, flash, request, redirect, url_for
 from werkzeug.utils import secure_filename
 
@@ -92,6 +94,11 @@ def past_events():
     page = request.args.get('page', default=1, type=int)
     # set page
 
+    qry = db.session.query(func.min(Event.event_date).label("min_score"))
+    # Grab oldest event for year selection
+    res = qry.one()
+    min = res.min_score
+
     month_list = ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12']
     month_names = {'01': 'January', '02': 'February', '03': 'March', '04': 'April', '05': 'May', '06': 'June',
                    '07': 'July', '08': 'August', '09': 'September', '10': 'October', '11': 'November', '12': 'December'}
@@ -100,7 +107,7 @@ def past_events():
     current_year = datetime.datetime.today().strftime('%Y')
     # storing current year in a variable
 
-    year_list = range(2017, int(current_year))
+    year_list = range(int(min.strftime('%Y')), int(current_year))
     # make the sure the list of years can increase as current year increases
 
     current_datetime = datetime.datetime.utcnow()
@@ -161,7 +168,12 @@ def news():
     current_year = datetime.datetime.today().strftime('%Y')
     # storing current year in a variable
 
-    year_list = list(range(2017, int(current_year)))
+    qry = db.session.query(func.min(News.news_date).label("min_score"))
+    # Grab oldest event for year selection
+    res = qry.one()
+    min = res.min_score
+
+    year_list = list(range(int(min.strftime('%Y')), int(current_year)))
     # make the sure the list of years can increase as current year increases
     year_list.reverse()
 
