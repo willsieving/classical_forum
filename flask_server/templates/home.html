@@ -81,11 +81,6 @@
 
             {% for item in news.items %}
                 <div class="row" style="margin-top: 20px">
-                    <div class="container d-flex" style="max-width: 10%">
-                        <div class="col align-self-center" style="margin-right: -15px; margin-left: -15px; max-width: 100px">
-                            <img class="rounded" src="{{ url_for('static', filename='news_pictures/' + item.image_file) }}">
-                        </div>
-                    </div>
                     <div class="" style="margin-right: 3%"></div>
 
                     <div class="col" style="margin-top: -10px">
@@ -100,6 +95,9 @@
                         <p class="line-clamp" style="margin-top: 1%; margin-bottom: 3%">
                             {{ item.content }}
                         </p>
+                        {% if item.image_file != 'news.png' %}
+                        <img class="rounded" style="width: 100%" src="{{ url_for('static', filename='news_pictures/' + item.image_file) }}">
+                        {% endif %}
                     </div>
                 </div>
             {% endfor %}

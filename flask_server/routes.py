@@ -20,38 +20,6 @@ from flask import url_for, current_app
 # Please don't judge my sloppy code, tried to comment as best I could.
 
 
-
-
-def save_picture(form_picture):
-    random_hex = secrets.token_hex(8)
-    # use _ for unused variables (in this case the file's name)
-    # because the input of the form is a file,
-    # it has a filename attribute that can be split into the name and the extension
-    # (we want to keep the extension and rename the file with a random hex, adding the extension)
-
-    image_data = request.FILES[form_picture.name].read()
-
-    #### IDK WHAT TO DO
-
-    picture_fn = random_hex + '.jpg'
-    # creating picture name (random 8 digit hex + the extension)
-
-    picture_path = os.path.join(current_app.root_path, 'static/news_pictures/', picture_fn)
-    # creating the path into which the picture will be saved
-    # (i.e. root path of app + static/profile_pics/picture_name+extension)
-    output_size = (150, 150)
-    # here we set the size output for the resizer
-    i = Image.open(image_data)
-    # opening the inputted picture into the i variable
-    i = i.resize(size=output_size)
-    # reducing the size of i with output_size
-    i.save(picture_path)
-    # saving the newly resized picture to the created path
-    # no longer saves the large version of the image
-    return picture_fn
-    # returns the picture name
-
-
 main = Blueprint('main', __name__)
 
 
@@ -319,10 +287,14 @@ def new_news():
             # Document and Profile photo save
             # picture_file.save(os.path.join(image_dir, pic_filename))
 
-            output_size_thumbnail = [75, 75]
-            output_size_page = [400, 400]
             i = Image.open(picture_file)
-            i2 = i.resize(output_size_thumbnail)
+            width, height = i.size  # Get dimensions
+            output_size_page = [width, height]
+            left = (width - 400) / 2
+            top = (height - 100) / 2
+            right = (width + 400) / 2
+            bottom = (height + 100) / 2
+            i2 = i.crop([left, top, right, bottom])
             i3 = i.resize(output_size_page)
             i2.save(os.path.join(image_dir, pic_filename))
             i3.save(os.path.join(image_dir, '1'+pic_filename))
