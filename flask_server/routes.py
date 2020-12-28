@@ -173,6 +173,11 @@ def news():
 def contact():
     return render_template('contact.html', title='Contact')
 
+@main.route('/admin')
+@login_required
+def admin():
+    return render_template('admin.html', title='Admin')
+
 
 # Gets the data from the forms and and posts it to database
 @main.route('/event/new', methods=['GET', 'POST'])
@@ -383,7 +388,7 @@ def login():
 
             next_page = request.args.get('next')
             # will get the next page that user wanted access but was redirected to login
-            return redirect(next_page) if next_page else redirect(url_for('main.home'))
+            return redirect(next_page) if next_page else redirect(url_for('main.admin'))
             # this will redirect to the page that user wanted to go to before they logged in
             # otherwise goes to home
         else:

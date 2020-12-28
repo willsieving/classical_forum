@@ -1,0 +1,26 @@
+{% extends "layout.html" %}
+{% block start_background_div %}<div class="bg1">{% endblock start_background_div %}
+{% block end_background_div %}</div>{% endblock end_background_div %}
+
+{% block content %}
+<div class="container-fluid" style="padding-top: 20px">
+<div class="row" style="flex-wrap: nowrap; margin-bottom: 20px; margin-left: -40px">
+    <div class="border-center rounded" style="float: left; width: 45%"></div>
+    <h1 class="text-center" style="color: #083443; margin-top: 0.8%">Admin Page</h1>
+    <div class="border-center rounded" style="float: right; width: 45%"></div>
+</div>
+</div>
+
+
+<div class="content-section">
+    <a class="" style="margin-top:20px; color: #012735; font-size: 1.25rem; margin-bottom: .5rem; line-height: 1.2" href="{{ url_for('main.new_news') }}">Create New Event</a>
+    <br>
+    <br>
+    <a class="" style="color: #012735; font-size: 1.25rem; margin-bottom: .5rem; line-height: 1.2" href="{{ url_for('main.new_event') }}">Create New News</a>
+    <br>
+    <br>
+    <p>Edit and Delete Events and News items from their respective pages.</p>
+</div>
+
+
+{% endblock content %}
