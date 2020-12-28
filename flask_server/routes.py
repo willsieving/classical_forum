@@ -1,7 +1,8 @@
 from flask import render_template, Blueprint, url_for, flash, redirect, request, abort
-from flask_server import db
-from flask_server.models import Event, News, Emails
-from flask_server.forms import EventForm, EmailForm, NewsForm
+from flask_server import db, bcrypt
+from flask_server.models import Event, News, Emails, User
+from flask_server.forms import EventForm, EmailForm, NewsForm, LoginForm
+from flask_login import login_user, current_user, logout_user, login_required
 import datetime
 
 from sqlalchemy import func
@@ -50,7 +51,7 @@ def home():
         # flashing not set up yet
         return redirect(url_for('main.home'))
 
-    return render_template('home.html', events=events, news=news_query, current_datetime=current_datetime, form=form)
+    return render_template('home.html', events=events, news=news_query, current_datetime=current_datetime, form=form, current_user=current_user)
 
 
 @main.route('/past_events', methods=['GET', 'POST'])
@@ -74,8 +75,12 @@ def past_events():
 
     current_year = datetime.datetime.today().strftime('%Y')
     # storing current year in a variable
+    if min:
+        earlier_year = int(min.strftime('%Y'))
+    else:
+        earlier_year = 2020
 
-    year_list = range(int(min.strftime('%Y')), int(current_year))
+    year_list = list(range(earlier_year, int(current_year)))
     # make the sure the list of years can increase as current year increases
 
     current_datetime = datetime.datetime.utcnow()
@@ -140,8 +145,12 @@ def news():
     # Grab oldest event for year selection
     res = qry.one()
     min = res.min_score
+    if min:
+        earlier_year = int(min.strftime('%Y'))
+    else:
+        earlier_year = 2020
 
-    year_list = list(range(int(min.strftime('%Y')), int(current_year)))
+    year_list = list(range(earlier_year, int(current_year)))
     # make the sure the list of years can increase as current year increases
     year_list.reverse()
 
@@ -167,6 +176,7 @@ def contact():
 
 # Gets the data from the forms and and posts it to database
 @main.route('/event/new', methods=['GET', 'POST'])
+@login_required
 def new_event():
 
     form = EventForm()
@@ -187,6 +197,7 @@ def new_event():
                            form=form, legend='New Event')
 
 @main.route('/event/<int:event_id>/update', methods=['GET', 'POST'])
+@login_required
 def update_event(event_id):
     event = Event.query.get_or_404(event_id)
     form = EventForm()
@@ -215,6 +226,7 @@ def update_event(event_id):
 
 
 @main.route('/event/<int:event_id>/delete', methods=['POST', 'GET'])
+@login_required
 def delete_event(event_id):
     event = Event.query.get_or_404(event_id)
 
@@ -229,6 +241,7 @@ def delete_event(event_id):
 
 
 @main.route('/news/<int:news_id>/update', methods=['GET', 'POST'])
+@login_required
 def update_news(news_id):
     news = News.query.get_or_404(news_id)
     form = NewsForm()
@@ -255,6 +268,7 @@ def update_news(news_id):
 
 
 @main.route('/news/<int:news_id>/delete', methods=['POST', 'GET'])
+@login_required
 def delete_news(news_id):
     news = News.query.get_or_404(news_id)
 
@@ -270,6 +284,7 @@ def delete_news(news_id):
 
 # Gets the data from the forms and and posts it to database
 @main.route('/news/new', methods=['GET', 'POST'])
+@login_required
 def new_news():
 
     form = NewsForm()
@@ -319,3 +334,65 @@ def new_news():
 
     return render_template('new_news.html', title='New News',
                            form=form, legend='New News')
+
+
+@main.route('/register', methods=['GET', 'POST'])
+# methods allows us to accept post requests such as the submit one
+def register():
+
+    #if the user is already logged in it will redirect to the home page
+    if current_user.is_authenticated:
+        return redirect(url_for('main.home'))
+
+    # if form valid then:
+    # first hash the password entered (decode utf-8 makes the hash a string)
+    hashed_password = bcrypt.generate_password_hash('2$`CT6[aXMVg~v{)').decode('utf-8')
+    # then enter the data into the database (dont enter plaintext password only hashed)
+    user = User(username='admin', password=hashed_password)
+    # add the user to the changes to be made to the database
+    db.session.add(user)
+    # commit the changes to the database
+    db.session.commit()
+    flash(f'Your account has been created! You are now able to log in.', 'success')
+    # if the form was valid on submit then flash this string
+    # flash messages are only one time, and disappear on reload
+    return redirect(url_for('main.login'))
+    # this redirects the user to the login page if the form submit is a success
+    # url_for just grabs the url of a given class/route name (home() in this case)
+
+
+@main.route('/login', methods=['GET', 'POST'])
+def login():
+    # if user is already logged in it will redirect to home page
+    if current_user.is_authenticated:
+        return redirect(url_for('main.home'))
+
+    form = LoginForm()
+    if form.validate_on_submit():
+        user = User.query.filter_by(username=form.username.data).first()
+        # will check if there are any emails that same as the one entered
+        # and will return first one found (there should only be one)
+
+        if user and bcrypt.check_password_hash(user.password, form.password.data):
+        # this will check if the user's password equal the un-hashed one entered on register
+        # (hashed password was stored on database)
+        # use check password hash to see if it works
+
+            login_user(user, remember=form.remember.data)
+            # this will log the user in
+
+            next_page = request.args.get('next')
+            # will get the next page that user wanted access but was redirected to login
+            return redirect(next_page) if next_page else redirect(url_for('main.home'))
+            # this will redirect to the page that user wanted to go to before they logged in
+            # otherwise goes to home
+        else:
+            # if login is successful then flash this message
+            flash('Login Unsuccessful. Please check email and password.', 'danger')
+        # if login failed then flash danger message and don't redirect
+    return render_template('login.html', title='Login', form=form)
+
+@main.route('/logout')
+def logout():
+    logout_user()
+    return redirect(url_for('main.home'))

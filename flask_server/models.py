@@ -1,6 +1,12 @@
-from flask_server import db
+from flask_server import db, login_manager
 import datetime
 # using datetime as a type of column
+from flask_login import UserMixin
+
+# this gets a user's ID
+@login_manager.user_loader
+def load_user(user_id):
+    return User.query.get(int(user_id))
 
 # Going to be using SQL Alchemy for database
 # it is an OOM - object-oriented mapper
@@ -8,6 +14,19 @@ import datetime
 # can use different databases in the same code (SQL lite, or another kind)
 
 # Each class is a different table of the database
+
+class User(db.Model, UserMixin):
+    # usermixin is for user classes only and lets it inherit certain properties
+    # inheriting will allow us to use different login extensions
+
+    # each of these columns represents a data input from user registration
+
+    id = db.Column(db.Integer, primary_key=True)
+    # each user gets a unique ID to identify them
+    username = db.Column(db.String(20), unique=True, nullable=False)
+    # everyone must have a username, and no one can have the same username as another (same with email)
+
+    password = db.Column(db.String(60), nullable=False)
 
 class Event(db.Model):
     id = db.Column(db.Integer, primary_key=True)

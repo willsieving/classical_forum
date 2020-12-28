@@ -1,6 +1,6 @@
 from flask_wtf import FlaskForm
 from flask_wtf.file import FileField, FileAllowed
-from wtforms import StringField, SubmitField, TextAreaField, DateTimeField
+from wtforms import StringField, SubmitField, TextAreaField, DateTimeField, PasswordField, SubmitField, BooleanField
 from wtforms.validators import DataRequired, Optional
 from wtforms.fields.html5 import EmailField, DateField, TimeField
 
@@ -30,3 +30,11 @@ class EmailForm(FlaskForm):
     email = EmailField('Enter Email Here:', validators=[DataRequired()])
     submit = SubmitField('Submit')
 
+
+class LoginForm(FlaskForm):
+
+    username = StringField('Username', validators=[DataRequired()])
+    password = PasswordField('Password', validators=[DataRequired()])
+    remember = BooleanField('Remember Me')
+    # will set a secure cookie to remember a login
+    submit = SubmitField('Login')

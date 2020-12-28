@@ -1,0 +1,74 @@
+{% extends "layout.html" %}
+{% block start_background_div %}<div class="bg1">{% endblock start_background_div %}
+{% block end_background_div %}</div>{% endblock end_background_div %}
+
+{% block content %}
+<div class="container-fluid" style="padding-top: 20px">
+<div class="row" style="flex-wrap: nowrap; margin-bottom: 20px; margin-left: -40px">
+    <div class="border-center rounded" style="float: left; width: 45%"></div>
+    <h1 class="text-center" style="color: #083443; margin-top: 0.8%">Login</h1>
+    <div class="border-center rounded" style="float: right; width: 45%"></div>
+</div>
+</div>
+
+
+<div class="content-section">
+    <form method="POST" action="">
+        {{ form.hidden_tag() }}
+        <fieldset class="form-group">
+            <legend class="border-bottom mb4">Log In</legend>
+            <!-- need form group for each attribute of the 'form' object-->
+
+            <div class="form-group">
+                {{ form.username.label(class="form-control-label") }}
+
+                {% if form.username.errors %}
+                    {{ form.username(class="form-control form-control-lg is-invalid") }}
+                    <div class="invalid-feedback">
+                        {% for error in form.username.errors %}
+                            <span>{{ error }}</span>
+                        {% endfor %}
+                    </div>
+                     <!-- this is the invalid feedback of the form,
+                    it uses an if statement to check if there are any errors with the 'email' attribute of the 'form' object,
+                    if there are it prints the each error in a div class -->
+                {% else %}
+                    {{ form.username(class="form-control form-control-lg") }}
+                    <!-- ^ this is the valid feed of the form
+                     that runs if there are no errors -->
+                {% endif %}
+
+            </div>
+            <div class="form-group">
+                {{ form.password.label(class="form-control-label") }}
+
+                {% if form.password.errors %}
+                    {{ form.password(class="form-control form-control-lg is-invalid") }}
+                    <div class="invalid-feedback">
+                        {% for error in form.password.errors %}
+                            <span>{{ error }}</span>
+                        {% endfor %}
+                    </div>
+                     <!-- this is the invalid feedback of the form,
+                    it uses an if statement to check if there are any errors with the 'password' attribute of the 'form' object,
+                    if there are it prints the each error in a div class -->
+                {% else %}
+                    {{ form.password(class="form-control form-control-lg") }}
+                    <!-- ^ this is the valid feed of the form
+                     that runs if there are no errors -->
+                {% endif %}
+            </div>
+            <div class="form-check">
+                {{ form.remember(class="form-check-input") }}
+                {{ form.remember.label(class="form-check-label") }}
+            </div>
+        </fieldset>
+        <div class="form-group">
+            {{ form.submit(class="btn btn-outline-info") }}
+        </div>
+
+    </form>
+</div>
+
+
+{% endblock content %}
