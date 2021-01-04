@@ -63,11 +63,6 @@ def past_events():
     page = request.args.get('page', default=1, type=int)
     # set page
 
-    qry = db.session.query(func.min(Event.event_date).label("min_score"))
-    # Grab oldest event for year selection
-    res = qry.one()
-    min = res.min_score
-
     month_list = ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12']
     month_names = {'01': 'January', '02': 'February', '03': 'March', '04': 'April', '05': 'May', '06': 'June',
                    '07': 'July', '08': 'August', '09': 'September', '10': 'October', '11': 'November', '12': 'December'}
@@ -75,12 +70,35 @@ def past_events():
 
     current_year = datetime.datetime.today().strftime('%Y')
     # storing current year in a variable
+
+    qry = db.session.query(func.min(Event.event_date).label("min_score"))
+    # Grab oldest event for year selection
+    qry2 = db.session.query(func.max(Event.event_date).label("max_score"))
+    # Grab max
+    res = qry.one()
+    res2 = qry2.one()
+    min = res.min_score
+    max = res2.max_score
+
+    qry3 = News.query.all()
+    yr_include = []
+    for item in qry3:
+        yr_include.append(int(item.news_date.strftime('%Y')))
+
     if min:
         earlier_year = int(min.strftime('%Y'))
     else:
-        earlier_year = 2020
+        earlier_year = int(datetime.datetime.now().strftime('%Y'))
 
-    year_list = list(range(earlier_year, int(current_year)))
+    if max:
+        max_year = int(max.strftime('%Y'))
+    else:
+        max_year = int(datetime.datetime.now().strftime('%Y'))
+
+    if max_year and earlier_year:
+        year_list = list(range(earlier_year, max_year))
+    else:
+        year_list = [earlier_year]
     # make the sure the list of years can increase as current year increases
 
     current_datetime = datetime.datetime.utcnow()
@@ -90,8 +108,11 @@ def past_events():
         year_selected = int(request.form['event_year'])
         str_year_sel = request.form['event_year']
     else:
-        year_selected = 2020
-        str_year_sel = '2020'
+        year_selected = int(max.strftime('%Y'))
+        str_year_sel = max.strftime('%Y')
+        while year_selected >= int(current_year):
+            year_selected = year_selected - 1
+        str_year_sel = str(year_selected)
 
     # once the inputs work this variable will be what the user selects on the year selection
 
@@ -100,7 +121,7 @@ def past_events():
     return render_template('past_events.html', events=events, current_datetime=current_datetime,
                            page=page, month_list=month_list, month_names=month_names, str_year_sel=str_year_sel,
                            year_list=reversed(year_list), current_year=int(current_year), year_selected=year_selected,
-                           title='Past Events')
+                           title='Past Events', yr_include=yr_include)
 
 
 @main.route('/event/<int:event_id>')
@@ -143,29 +164,51 @@ def news():
 
     qry = db.session.query(func.min(News.news_date).label("min_score"))
     # Grab oldest event for year selection
+    qry2 = db.session.query(func.max(News.news_date).label("max_score"))
+    # Grab max
+    qry3 = News.query.all()
+    yr_include = []
+    for item in qry3:
+        yr_include.append(int(item.news_date.strftime('%Y')))
     res = qry.one()
+    res2 = qry2.one()
     min = res.min_score
+    max = res2.max_score
+
     if min:
         earlier_year = int(min.strftime('%Y'))
     else:
-        earlier_year = 2020
+        earlier_year = int(datetime.datetime.now().strftime('%Y'))
 
-    year_list = list(range(earlier_year, int(current_year)))
+    if max:
+        max_year = int(max.strftime('%Y'))
+    else:
+        max_year = int(datetime.datetime.now().strftime('%Y'))
+
+    if earlier_year and max_year:
+        year_list = list(range(earlier_year, max_year))
+    else:
+        year_list = [earlier_year]
     # make the sure the list of years can increase as current year increases
     year_list.reverse()
+
+
 
     if request.method == 'POST':
         year_selected = int(request.form['news_year'])
         str_year_sel = request.form['news_year']
     else:
-        year_selected = 2020
-        str_year_sel = '2020'
+        year_selected = int(max.strftime('%Y'))
+        str_year_sel = max.strftime('%Y')
+        while year_selected >= int(current_year):
+            year_selected = year_selected - 1
+        str_year_sel = str(year_selected)
 
     current_datetime = datetime.datetime.utcnow()
 
     return render_template('news.html', news=news_db, current_year=current_year, year_list=year_list,
                            current_datetime=current_datetime, year_selected=year_selected, str_year_sel=str_year_sel,
-                           title='News')
+                           title='News', yr_include=yr_include)
 
 
 # TO DO
@@ -187,10 +230,18 @@ def new_event():
     form = EventForm()
 
     if form.validate_on_submit():
+        if form.event_date.data and form.event_time.data:
+            event_date_entry = datetime.datetime.strptime(str(form.event_date.data) + ' ' + str(form.event_time.data), "%Y-%m-%d %H:%M:%S")
+        else:
+            event_date_entry = None
+        if form.event_end_date.data and form.event_end_time.data:
+            event_end_entry = datetime.datetime.strptime(str(form.event_end_date.data) + ' ' + str(form.event_end_time.data), "%Y-%m-%d %H:%M:%S")
+        else:
+            event_end_entry = None
         event = Event(title=form.title.data,
-                      event_date=form.event_date.data,
+                      event_date=event_date_entry,
                       content=form.content.data,
-                      event_end=form.event_end.data)
+                      event_end=event_end_entry)
         # here we are getting the data from the forms and putting it in the database
         db.session.add(event)
         # adding event to database
@@ -207,12 +258,14 @@ def update_event(event_id):
     event = Event.query.get_or_404(event_id)
     form = EventForm()
     if form.validate_on_submit():
-        event_date_obj = datetime.datetime.strptime(str(form.event_date.data), '%Y-%m-%d %H:%M:%S')
-        event_end_obj = datetime.datetime.strptime(str(form.event_end.data), '%Y-%m-%d %H:%M:%S')
+        event_date_obj = datetime.datetime.strptime(str(form.event_date.data) + ' ' + str(form.event_time.date),
+                                                   '%Y-%m-%d %H:%M:%S')
+        event_end_date_obj = datetime.datetime.strptime(str(form.event_end_date.data) + ' ' + str(form.event_end_time.date),
+                                                    '%Y-%m-%d %H:%M:%S')
         event.title = form.title.data
         event.content = form.content.data
         event.event_date = event_date_obj
-        event.event_end = event_end_obj
+        event.event_end = event_end_date_obj
         # here we set the value of things already in the database, so we don't need a db.session.add
         # only to commit the changes
         db.session.commit()
@@ -224,7 +277,9 @@ def update_event(event_id):
         # if the request is a get request which it should always be
         form.content.data = event.content
         form.event_date.data = event.event_date
-        form.event_end.data = event.event_end
+        form.event_time.data = event.event_date
+        form.event_end_date.data = event.event_end
+        form.event_end_time.data = event.event_end
 
     return render_template('new_event.html', title='Update Event',
                            form=form, legend='Update Event')

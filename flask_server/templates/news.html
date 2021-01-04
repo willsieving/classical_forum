@@ -20,23 +20,13 @@
 
 
   <form name="year" id="year" class="list-group btn-group btn-group-toggle" data-toggle="buttons" action="{{ url_for('main.news') }}" method="POST">
-    <div class="hl" style=""></div>
 
 
 
-    {% if str_year_sel == current_year %}
-        <label class="btn btn-events rounded active" style="margin-left: -1px">
-            <input type="radio" name="news_year" value="{{ current_year }}" checked="checked" /> {{ current_year }}
-        </label>
-        <div style="padding-bottom: 0px"></div>
-    {% else %}
-        <label class="btn btn-events rounded" style="margin-left: -1px">
-            <input type="radio" name="news_year" value="{{ current_year }}" /> {{ current_year }}
-        </label>
-        <div style="padding-bottom: 0px"></div>
-    {% endif %}
+
 
     {% for year in year_list %}
+    {% if year in yr_include %}
     {% if year_selected == year %}
     <div class="hl" style=""></div>
     <label class="btn btn-events rounded active" style="margin-left: -1px">
@@ -50,6 +40,10 @@
     </label>
     <div style="padding-bottom: 0px"></div>
     {% endif %}
+    {% else %}
+
+    {% endif %}
+
     {% endfor %}
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
     <script type='text/javascript'>

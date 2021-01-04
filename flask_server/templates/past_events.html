@@ -20,23 +20,9 @@
 
 
   <form name="year" id="year" class="list-group btn-group btn-group-toggle" data-toggle="buttons" action="{{ url_for('main.past_events') }}" method="POST">
-    <div class="hl" style=""></div>
-
-
-
-    {% if year_selected == current_year %}
-        <label class="btn btn-events rounded active" style="margin-left: -1px">
-            <input type="radio" name="event_year" value="{{ current_year }}" checked="checked" /> {{ current_year }}
-        </label>
-        <div style="padding-bottom: 0px"></div>
-    {% else %}
-        <label class="btn btn-events rounded" style="margin-left: -1px">
-            <input type="radio" name="event_year" value="{{ current_year }}" /> {{ current_year }}
-        </label>
-        <div style="padding-bottom: 0px"></div>
-    {% endif %}
 
     {% for year in year_list %}
+    {% if year in yr_include %}
     {% if year_selected == year %}
     <div class="hl" style=""></div>
     <label class="btn btn-events rounded active" style="margin-left: -1px">
@@ -49,6 +35,9 @@
         <input type="radio" name="event_year" value="{{ year }}" /> {{ year }}
     </label>
     <div style="padding-bottom: 0px"></div>
+    {% endif %}
+    {% else %}
+
     {% endif %}
     {% endfor %}
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
@@ -82,36 +71,23 @@
                         {% if item.event_date.strftime('%Y') == str_year_sel %}
                             <!-- need to add currently selected year here too -->
                             {% if item.event_date.strftime('%m') == month %}
+                                {% if item.event_date < current_datetime %}
                                 <div class="row">
                                     <h4 class="text-center event-text" style="font-family: 'Playfair Display', serif; margin-left: 1%; margin-right: 1%; font-size: xx-large">{{ item.event_date.strftime('%d') }}</h4>
                                     <div class="col" style="margin-top: -1%">
                                         <a class="bold nounderline" style="color: #035c7e; font-size: 1.25rem; line-height: 1.2; display: inline-block" href="{{ url_for('main.event', event_id=item.id) }}">{{ item.title }}</a>
-                                        {% if item.event_end == None %}
+
                                             <a class="" style="color: #035c7e; font-size: 1.25rem; line-height: 1.2; display: inline-block; margin-left: 20px;">{{ item.event_date.strftime('%I:%M %p') }}</a>
                                             <p class="line-clamp" style="margin-top: 1%; margin-bottom: 3%">
                                                 {{ item.content }}
                                             </p>
-                                        {% elif item.event_end.strftime('%d') == item.event_date.strftime('%d') %}
-                                            <a class="" style="color: #035c7e; font-size: 1.25rem; line-height: 1.2; display: inline-block; margin-left: 20px;">{{ item.event_date.strftime('%I:%M %p') }} - {{ item.event_end.strftime('%I:%M %p') }}</a>
-                                            <p class="line-clamp" style="margin-top: 1%; margin-bottom: 3%">
-                                                {{ item.content }}
-                                            </p>
-                                        {% elif item.event_end.strftime('%Y') == item.event_date.strftime('%Y') %}
-                                            <a class="" style="color: #035c7e; font-size: 1.25rem; line-height: 1.2; display: inline-block; margin-left: 20px;">{{ item.event_date.strftime('%I:%M %p') }} - {{ item.event_end.strftime('%I:%M %p') }} on {{ item.event_end.strftime('%b %d') }}</a>
-                                            <p class="line-clamp" style="margin-top: 1%; margin-bottom: 3%">
-                                                {{ item.content }}
-                                            </p>
-                                        {% else %}
-                                            <a class="" style="color: #035c7e; font-size: 1.25rem; line-height: 1.2; display: inline-block; margin-left: 20px;">{{ item.event_date.strftime('%I:%M %p') }} - {{ item.event_end.strftime('%I:%M %p') }} on {{ item.event_end.strftime('%b %d, %Y') }}</a>
-                                            <p class="line-clamp" style="margin-top: 1%; margin-bottom: 3%">
-                                                {{ item.content }}
-                                            </p>
-                                        {% endif %}
+
                                     </div>
                                 </div>
                                 <script>
                                     none_counter = none_counter + 1;
                                 </script>
+                                {% endif %}
                             {% endif %}
                         {% endif %}
                     {% endfor %}

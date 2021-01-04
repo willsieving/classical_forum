@@ -23,7 +23,7 @@
                 {{ form.username.label(class="form-control-label") }}
 
                 {% if form.username.errors %}
-                    {{ form.username(class="form-control form-control-lg is-invalid") }}
+                    {{ form.username(class="is-invalid") }}
                     <div class="invalid-feedback">
                         {% for error in form.username.errors %}
                             <span>{{ error }}</span>
@@ -33,7 +33,7 @@
                     it uses an if statement to check if there are any errors with the 'email' attribute of the 'form' object,
                     if there are it prints the each error in a div class -->
                 {% else %}
-                    {{ form.username(class="form-control form-control-lg") }}
+                    {{ form.username(class="") }}
                     <!-- ^ this is the valid feed of the form
                      that runs if there are no errors -->
                 {% endif %}
@@ -43,7 +43,7 @@
                 {{ form.password.label(class="form-control-label") }}
 
                 {% if form.password.errors %}
-                    {{ form.password(class="form-control form-control-lg is-invalid") }}
+                    {{ form.password(class="is-invalid") }}
                     <div class="invalid-feedback">
                         {% for error in form.password.errors %}
                             <span>{{ error }}</span>
@@ -53,7 +53,7 @@
                     it uses an if statement to check if there are any errors with the 'password' attribute of the 'form' object,
                     if there are it prints the each error in a div class -->
                 {% else %}
-                    {{ form.password(class="form-control form-control-lg") }}
+                    {{ form.password(class="") }}
                     <!-- ^ this is the valid feed of the form
                      that runs if there are no errors -->
                 {% endif %}

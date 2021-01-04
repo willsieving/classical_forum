@@ -16,16 +16,16 @@
             <div class="col" style="margin-top: -1%">
                 <h3 class="nounderline" style="color: #000000; margin-left: 5px">{{ title }}</h3>
                 {% if event.event_end == None %}
-                    <a class="" style="color: #035c7e; font-size: 1.25rem; line-height: 1.2; display: inline-block; margin-left: 20px;">{{ event.event_date.strftime('%I:%M %p') }}</a>
+                    <a class="" style="color: #035c7e; font-size: 1.25rem; line-height: 1.2; display: inline-block; margin-left: 20px;">{{ event.event_date.strftime('%b %d, %Y') }}, {{ event.event_date.strftime('%I:%M %p') }}</a>
 
-                {% elif event.event_end.strftime('%d') == event.event_date.strftime('%d') %}
-                    <a class="" style="color: #035c7e; font-size: 1.25rem; line-height: 1.2; display: inline-block; margin-left: 20px;">{{ event.event_date.strftime('%I:%M %p') }} - {{ event.event_end.strftime('%I:%M %p') }}</a>
+                {% elif event.event_end.strftime('%d') == event.event_date.strftime('%d') and event.event_end.strftime('%Y') == event.event_date.strftime('%Y') %}
+                    <a class="" style="color: #035c7e; font-size: 1.25rem; line-height: 1.2; display: inline-block; margin-left: 20px;">{{ event.event_date.strftime('%b %d, %Y') }}, {{ event.event_date.strftime('%I:%M %p') }} - {{ event.event_end.strftime('%I:%M %p') }}</a>
 
                 {% elif event.event_end.strftime('%Y') == event.event_date.strftime('%Y') %}
-                    <a class="" style="color: #035c7e; font-size: 1.25rem; line-height: 1.2; display: inline-block; margin-left: 20px;">{{ event.event_date.strftime('%I:%M %p') }} - {{ event.event_end.strftime('%I:%M %p') }} on {{ event.event_end.strftime('%b %d') }}</a>
+                    <a class="" style="color: #035c7e; font-size: 1.25rem; line-height: 1.2; display: inline-block; margin-left: 20px;">{{ event.event_date.strftime('%b %d') }}, {{ event.event_date.strftime('%I:%M %p') }} - {{ event.event_end.strftime('%b %d') }}, {{ event.event_end.strftime('%I:%M %p') }}</a>
 
                 {% else %}
-                    <a class="" style="color: #035c7e; font-size: 1.25rem; line-height: 1.2; display: inline-block; margin-left: 20px;">{{ event.event_date.strftime('%I:%M %p') }} - {{ event.event_end.strftime('%I:%M %p') }} on {{ event.event_end.strftime('%b %d, %Y') }}</a>
+                    <a class="" style="color: #035c7e; font-size: 1.25rem; line-height: 1.2; display: inline-block; margin-left: 20px;">{{ event.event_date.strftime('%b %d, %Y') }}, {{ event.event_date.strftime('%I:%M %p') }} - {{ event.event_end.strftime('%b %d, %Y') }}, {{ event.event_end.strftime('%I:%M %p') }}</a>
 
                 {% endif %}
             </div>
@@ -40,6 +40,6 @@
         </div>
     </div>
 
-<div style="height: 1000px"></div>
+<div style="height: 100px"></div>
 
 {% endblock content %}

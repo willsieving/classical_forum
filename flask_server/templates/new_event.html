@@ -23,7 +23,7 @@
             <div class="form-group">
                 {{ form.title.label(class="form-control-label") }}
                 {% if form.title.errors %}
-                    {{ form.title(class="form-control form-control-lg is-invalid") }}
+                    {{ form.title(class="form-control is-invalid") }}
                     <div class="invalid-feedback">
                         {% for error in form.title.errors %}
                             <span>{{ error }}</span>
@@ -33,7 +33,7 @@
                         it uses an if statement to check if there are any errors with the 'email' attribute of the 'form' object,
                         if there are it prints the each error in a div class -->
                 {% else %}
-                    {{ form.title(class="form-control form-control-lg") }}
+                    {{ form.title(class="form-control") }}
                         <!-- ^ this is the valid feed of the form
                          that runs if there are no errors -->
                 {% endif %}
@@ -44,7 +44,7 @@
                 {{ form.event_date.label(class="form-control-label") }}
 
                 {% if form.event_date.errors %}
-                    {{ form.event_date(class="form-control form-control-lg is-invalid") }}
+                    {{ form.event_date(class="is-invalid") }}
                     <div class="invalid-feedback">
                         {% for error in form.event_date.errors %}
                             <span>{{ error }}</span>
@@ -54,18 +54,18 @@
                         it uses an if statement to check if there are any errors with the 'password' attribute of the 'form' object,
                         if there are it prints the each error in a div class -->
                 {% else %}
-                    {{ form.event_date(class="form-control form-control-lg") }}
+                    {{ form.event_date(class="") }}
                         <!-- ^ this is the valid feed of the form
                          that runs if there are no errors -->
                 {% endif %}
             </div>
             <div class="form-group">
-                {{ form.event_end.label(class="form-control-label") }}
+                {{ form.event_time.label(class="form-control-label") }}
 
-                {% if form.event_end.errors %}
-                    {{ form.event_end(class="form-control form-control-lg is-invalid") }}
+                {% if form.event_time.errors %}
+                    {{ form.event_time(class="is-invalid") }}
                     <div class="invalid-feedback">
-                        {% for error in form.event_end.errors %}
+                        {% for error in form.event_time.errors %}
                             <span>{{ error }}</span>
                         {% endfor %}
                     </div>
@@ -73,11 +73,50 @@
                         it uses an if statement to check if there are any errors with the 'password' attribute of the 'form' object,
                         if there are it prints the each error in a div class -->
                 {% else %}
-                    {{ form.event_end(class="form-control form-control-lg") }}
+                    {{ form.event_time(class="") }}
                         <!-- ^ this is the valid feed of the form
                          that runs if there are no errors -->
                 {% endif %}
             </div>
+            <div class="form-group">
+                {{ form.event_end_date.label(class="form-control-label") }}
+
+                {% if form.event_end_date.errors %}
+                    {{ form.event_end_date(class="is-invalid") }}
+                    <div class="invalid-feedback">
+                        {% for error in form.event_end_date.errors %}
+                            <span>{{ error }}</span>
+                        {% endfor %}
+                    </div>
+                         <!-- this is the invalid feedback of the form,
+                        it uses an if statement to check if there are any errors with the 'password' attribute of the 'form' object,
+                        if there are it prints the each error in a div class -->
+                {% else %}
+                    {{ form.event_end_date(class="") }}
+                        <!-- ^ this is the valid feed of the form
+                         that runs if there are no errors -->
+                {% endif %}
+            </div>
+            <div class="form-group">
+                {{ form.event_end_time.label(class="form-control-label") }}
+
+                {% if form.event_end_time.errors %}
+                    {{ form.event_end_time(class="is-invalid") }}
+                    <div class="invalid-feedback">
+                        {% for error in form.event_end_time.errors %}
+                            <span>{{ error }}</span>
+                        {% endfor %}
+                    </div>
+                         <!-- this is the invalid feedback of the form,
+                        it uses an if statement to check if there are any errors with the 'password' attribute of the 'form' object,
+                        if there are it prints the each error in a div class -->
+                {% else %}
+                    {{ form.event_end_time(class="") }}
+                        <!-- ^ this is the valid feed of the form
+                         that runs if there are no errors -->
+                {% endif %}
+            </div>
+
             <div class="form-group">
                 {{ form.content.label(class="form-control-label") }}
 
