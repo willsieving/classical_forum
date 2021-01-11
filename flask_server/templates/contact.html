@@ -1,5 +1,5 @@
 {% extends "layout.html" %}
-{% block start_background_div %}<div class="bg1">{% endblock start_background_div %}
+{% block start_background_div %}<div class="bg1" style="">{% endblock start_background_div %}
 {% block end_background_div %}</div>{% endblock end_background_div %}
 
 {% block content %}
@@ -12,9 +12,37 @@
 </div>
 
 
-<div class="content-section">
-
+<div class="content-section col">
+    <div class="row">
+        <div class="col">
+        <a class="bold" style="color: #035c7e; font-size: 1.25rem; line-height: 1.2" href="https://classics.berkeley.edu/">UC Berkeley Department of Classics</a>
+        <br>
+        <div class="border-center rounded" STYLE="margin-left: -5px"></div>
+        <br>
+        <a class="bold" style="color: #035c7e; font-size: 1.25rem; line-height: 1.2" href="https://nes.berkeley.edu/">UC Berkeley Department of Near Eastern Studies </a>
+        <br>
+        <a class="bold" style="color: #035c7e; font-size: 1.25rem; line-height: 1.2" href="http://ahma.berkeley.edu/">UC Berkeley Graduate Group in Ancient History and Mediterranean Archaeology (AHMA)</a>
+        <br>
+        <div class="border-center rounded" STYLE="margin-left: -5px"></div>
+        <br>
+        <a class="bold" style="color: #035c7e; font-size: 1.25rem; line-height: 1.2" href="https://www.ekathimerini.com/">Greece's International English Language Newspaper</a>
+        <br>
+        <a class="bold" style="color: #035c7e; font-size: 1.25rem; line-height: 1.2" href="https://www.archaeological.org/">Archaeology Institute of America</a>
+        <br>
+        <a class="bold" style="color: #035c7e; font-size: 1.25rem; line-height: 1.2" href="https://asuc.org/">Associated Students of the University of California (ASUC)</a>
+        <br>
+        <div class="border-center rounded" STYLE="margin-left: -5px"></div>
+        <br>
+        <a class="bold" style="color: #035c7e; font-size: 1.25rem; line-height: 1.2" href="https://www.facebook.com/groups/218390945846620/">The Classical Forum - Facebook Group</a>
+        <br>
+        </div>
+        <div class="col text-center">
+            {% for item in president %}
+                <div class="bold" style="margin-bottom: 10px; color: #035c7e; font-size: 1.25rem; line-height: 1.2" >President:</div>
+                <div class="" style="color: #035c7e; font-size: 1.1rem; line-height: 1.2" >{{ item.name }}</div>
+                <div class="" style="color: #035c7e; font-size: 1.1rem; line-height: 1.2" >{{ item.email }}</div>
+            {% endfor %}
+        </div>
+    </div>
 </div>
-
-
 {% endblock content %}

@@ -67,3 +67,11 @@ class Emails(db.Model):
     def __repr__(self):
         return f"Email: {self.email}"
 
+class President(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String, nullable=False)
+    email = db.Column(db.String, nullable=False)
+
+    def __repr__(self):
+        return f"President is {self.name}: {self.email}"
+

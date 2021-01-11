@@ -1,7 +1,7 @@
 from flask import render_template, Blueprint, url_for, flash, redirect, request, abort
 from flask_server import db, bcrypt
-from flask_server.models import Event, News, Emails, User
-from flask_server.forms import EventForm, EmailForm, NewsForm, LoginForm
+from flask_server.models import Event, News, Emails, User, President
+from flask_server.forms import EventForm, EmailForm, NewsForm, LoginForm, PresidentForm
 from flask_login import login_user, current_user, logout_user, login_required
 import datetime
 
@@ -27,6 +27,7 @@ main = Blueprint('main', __name__)
 @main.route('/', methods=['GET', 'POST'])
 @main.route('/home', methods=['GET', 'POST'])
 def home():
+
     db.create_all()
     # Creating database in case there isn't already one
     current_datetime = datetime.datetime.utcnow()
@@ -53,6 +54,14 @@ def home():
 
     return render_template('home.html', events=events, news=news_query, current_datetime=current_datetime, form=form, current_user=current_user)
 
+@main.route('/create_president')
+def create_president():
+    president = President(name="Test Name", email="test@email.com")
+    # here we are getting the data from the form and putting it in the email table of the database
+    db.session.add(president)
+    # adding email to database
+    db.session.commit()
+    return redirect(url_for('main.admin'))
 
 @main.route('/past_events', methods=['GET', 'POST'])
 def past_events():
@@ -80,10 +89,10 @@ def past_events():
     min = res.min_score
     max = res2.max_score
 
-    qry3 = News.query.all()
+    qry3 = Event.query.all()
     yr_include = []
     for item in qry3:
-        yr_include.append(int(item.news_date.strftime('%Y')))
+        yr_include.append(int(item.event_date.strftime('%Y')))
 
     if min:
         earlier_year = int(min.strftime('%Y'))
@@ -95,10 +104,12 @@ def past_events():
     else:
         max_year = int(datetime.datetime.now().strftime('%Y'))
 
-    if max_year and earlier_year:
+    if max_year != earlier_year:
         year_list = list(range(earlier_year, max_year))
     else:
         year_list = [earlier_year]
+
+
     # make the sure the list of years can increase as current year increases
 
     current_datetime = datetime.datetime.utcnow()
@@ -108,14 +119,15 @@ def past_events():
         year_selected = int(request.form['event_year'])
         str_year_sel = request.form['event_year']
     else:
-        year_selected = int(max.strftime('%Y'))
-        str_year_sel = max.strftime('%Y')
-        while year_selected >= int(current_year):
-            year_selected = year_selected - 1
-        str_year_sel = str(year_selected)
-
+        if max:
+            year_selected = int(max_year)
+            str_year_sel = str(max_year)
+            while year_selected >= int(current_year):
+                year_selected = year_selected - 1
+        else:
+            year_selected = 0
+            str_year_sel = '0'
     # once the inputs work this variable will be what the user selects on the year selection
-
 
     # pass all the objs and variables into the html page
     return render_template('past_events.html', events=events, current_datetime=current_datetime,
@@ -180,29 +192,31 @@ def news():
     else:
         earlier_year = int(datetime.datetime.now().strftime('%Y'))
 
+
     if max:
         max_year = int(max.strftime('%Y'))
     else:
         max_year = int(datetime.datetime.now().strftime('%Y'))
 
-    if earlier_year and max_year:
+    if earlier_year != max_year:
         year_list = list(range(earlier_year, max_year))
     else:
         year_list = [earlier_year]
     # make the sure the list of years can increase as current year increases
     year_list.reverse()
 
-
-
     if request.method == 'POST':
-        year_selected = int(request.form['news_year'])
-        str_year_sel = request.form['news_year']
+        year_selected = int(request.form['event_year'])
+        str_year_sel = request.form['event_year']
     else:
-        year_selected = int(max.strftime('%Y'))
-        str_year_sel = max.strftime('%Y')
-        while year_selected >= int(current_year):
-            year_selected = year_selected - 1
-        str_year_sel = str(year_selected)
+        if max:
+            year_selected = int(max_year)
+            str_year_sel = str(max_year)
+            while year_selected >= int(current_year):
+                year_selected = year_selected - 1
+        else:
+            year_selected = 0
+            str_year_sel = '0'
 
     current_datetime = datetime.datetime.utcnow()
 
@@ -214,12 +228,21 @@ def news():
 # TO DO
 @main.route('/contact')
 def contact():
-    return render_template('contact.html', title='Contact')
+    president = President.query.all()
+    return render_template('contact.html', title='Contact', president=president)
 
 @main.route('/admin')
 @login_required
 def admin():
+
+
     return render_template('admin.html', title='Admin')
+
+@main.route('/emails')
+@login_required
+def emails():
+    emails = Emails.query.all()
+    return render_template('emails.html', emails=emails, title='Emails')
 
 
 # Gets the data from the forms and and posts it to database
@@ -453,6 +476,51 @@ def login():
     return render_template('login.html', title='Login', form=form)
 
 @main.route('/logout')
+@login_required
 def logout():
     logout_user()
     return redirect(url_for('main.home'))
+
+@main.route('/email/<int:email_id>/delete', methods=['POST', 'GET'])
+@login_required
+def delete_email(email_id):
+    emails = Emails.query.get_or_404(email_id)
+
+    db.session.delete(emails)
+    # deleting the post from the database
+    db.session.commit()
+    # committing the changes
+    flash('Your post has been deleted!', 'success')
+    # flashing a success message
+    return redirect(url_for('main.emails'))
+    # redirecting to the home page
+
+@main.route('/president/<int:president_id>/delete', methods=['GET', 'POST'])
+@login_required
+def president_delete(president_id):
+    president = President.query.get_or_404(president_id)
+    db.session.delete(president)
+    db.session.commit()
+
+    return redirect(url_for('main.contact'))
+
+@main.route('/president/<int:president_id>/update', methods=['GET', 'POST'])
+@login_required
+def president(president_id):
+    president = President.query.get_or_404(president_id)
+    form = PresidentForm()
+    if form.validate_on_submit():
+        president.name = form.name.data
+        president.email = form.email.data
+        db.session.commit()
+        flash('Your post has been updated!', 'success')
+        return redirect(url_for('main.contact'))
+    elif request.method == 'GET':
+        form.name.data = president.name
+        # fill in the form with the content of the post (so it can be edited)
+        # if the request is a get request which it should always be
+        form.email.data = president.email
+
+    return render_template('president.html', title='Update President',
+                           form=form, legend='Update President')
+

@@ -71,6 +71,9 @@
                 </div>
                 {% if current_user.username == 'admin' %}
                 <div class="container text-center text-nowrap">
+                    <a class="nav-item nav-link text-center" href="{{ url_for('main.admin') }}">Admin Page</a>
+                </div>
+                <div class="container text-center text-nowrap">
                     <a class="nav-item nav-link text-center" href="{{ url_for('main.logout') }}">Logout</a>
                 </div>
                 {% endif %}

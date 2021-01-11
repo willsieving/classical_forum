@@ -40,3 +40,8 @@ class LoginForm(FlaskForm):
     remember = BooleanField('Remember Me')
     # will set a secure cookie to remember a login
     submit = SubmitField('Login')
+
+class PresidentForm(FlaskForm):
+    name = StringField('Name', validators=[DataRequired()])
+    email = EmailField('Email', validators=[DataRequired()])
+    submit = SubmitField('Change President')
