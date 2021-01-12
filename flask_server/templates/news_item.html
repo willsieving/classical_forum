@@ -16,17 +16,20 @@
             <div class="col" style="margin-top: -1%">
                 <h3 class="nounderline" style="color: #000000; margin-left: 5px">{{ title }}</h3>
                 <a class="" style="color: #024863; font-size: 1rem; line-height: 1.2; display: inline-block; margin-left: 20px;">{{ news.news_date.strftime('%I:%M %p') }}</a>
+                <br>
+                <a class="" style="color: #024863; font-size: 1rem; line-height: 1.2; display: inline-block; margin-left: 20px;">{{ news.news_date.strftime('%A, %B %m, %Y') }}</a>
             </div>
         </div>
-        {% if news.image_file != 'news.png' %}
-            <img class="align-center rounded align-center shadow-sm" style="max-width: 70%; display: block; margin-left: auto; margin-right: auto;" src="{{ url_for('static', filename='news_pictures/' + '1' + news.image_file) }}">
-        {% endif %}
 
-        <div class="row">
 
-            <div class="col shadow-sm content-section">
+        <div class="row" style="margin-top: 5px">
+
+            <div class="col">
                 <div class="row">
-                    <div class="col-sm" style="">
+                {% if news.image_file != 'news.png' %}
+                    <img class="align-center rounded align-center shadow-sm" style="max-height: 400px; max-width: 70%; display: block; margin-left: auto; margin-right: auto;" src="{{ url_for('static', filename='news_pictures/' + '1' + news.image_file) }}">
+                {% endif %}
+                    <div class="col-sm shadow-sm content-section" style="margin-top: 0px; margin-left: 5px">
                         <p>{{ news.content }}</p>
                         {% if current_user.username == 'admin' %}
                         <a class="bold nounderline" style="color: #035c7e; font-size: 1.25rem; margin-bottom: .5rem; line-height: 1.2" href="{{ url_for('main.update_news', news_id=news.id) }}">Edit</a>

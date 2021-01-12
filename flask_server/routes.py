@@ -91,8 +91,11 @@ def past_events():
 
     qry3 = Event.query.all()
     yr_include = []
+    current_datetime = datetime.datetime.utcnow()
+
     for item in qry3:
-        yr_include.append(int(item.event_date.strftime('%Y')))
+        if item.event_date <= current_datetime:
+            yr_include.append(int(item.event_date.strftime('%Y')))
 
     if min:
         earlier_year = int(min.strftime('%Y'))
@@ -106,29 +109,37 @@ def past_events():
 
     if max_year != earlier_year:
         year_list = list(range(earlier_year, max_year))
+        year_list.append(int(current_year))
     else:
         year_list = [earlier_year]
 
 
     # make the sure the list of years can increase as current year increases
 
-    current_datetime = datetime.datetime.utcnow()
+
     # current datetime
 
     if request.method == 'POST':
         year_selected = int(request.form['event_year'])
         str_year_sel = request.form['event_year']
     else:
-        if max:
-            year_selected = int(max_year)
-            str_year_sel = str(max_year)
-            while year_selected >= int(current_year):
-                year_selected = year_selected - 1
+        if max_year != earlier_year:
+            if max_year not in yr_include:
+                year_selected = int(max_year)
+                while year_selected > int(earlier_year):
+                    year_selected = year_selected - 1
+                str_year_sel = str(year_selected)
+            else:
+                year_selected = int(max_year)
+                while year_selected > int(current_year):
+                    year_selected = year_selected - 1
+                str_year_sel = str(year_selected)
         else:
             year_selected = 0
             str_year_sel = '0'
     # once the inputs work this variable will be what the user selects on the year selection
-
+    yr_include = set(yr_include)
+    yr_include = list(yr_include)
     # pass all the objs and variables into the html page
     return render_template('past_events.html', events=events, current_datetime=current_datetime,
                            page=page, month_list=month_list, month_names=month_names, str_year_sel=str_year_sel,
@@ -180,8 +191,14 @@ def news():
     # Grab max
     qry3 = News.query.all()
     yr_include = []
+
+    current_datetime = datetime.datetime.utcnow()
+
+
     for item in qry3:
-        yr_include.append(int(item.news_date.strftime('%Y')))
+        if item.news_date <= current_datetime:
+            yr_include.append(int(item.news_date.strftime('%Y')))
+
     res = qry.one()
     res2 = qry2.one()
     min = res.min_score
@@ -192,7 +209,6 @@ def news():
     else:
         earlier_year = int(datetime.datetime.now().strftime('%Y'))
 
-
     if max:
         max_year = int(max.strftime('%Y'))
     else:
@@ -200,26 +216,35 @@ def news():
 
     if earlier_year != max_year:
         year_list = list(range(earlier_year, max_year))
+        year_list.append(int(current_year))
     else:
         year_list = [earlier_year]
     # make the sure the list of years can increase as current year increases
     year_list.reverse()
-
     if request.method == 'POST':
-        year_selected = int(request.form['event_year'])
-        str_year_sel = request.form['event_year']
+        year_selected = int(request.form['news_year'])
+        str_year_sel = request.form['news_year']
     else:
-        if max:
-            year_selected = int(max_year)
-            str_year_sel = str(max_year)
-            while year_selected >= int(current_year):
-                year_selected = year_selected - 1
+        if max_year != earlier_year:
+            if max_year not in yr_include:
+                year_selected = int(max_year)
+                while year_selected > int(earlier_year):
+                    year_selected = year_selected - 1
+                str_year_sel = str(year_selected)
+                print('here', year_selected)
+            else:
+                year_selected = int(max_year)
+                while year_selected > int(current_year):
+                    year_selected = year_selected - 1
+                str_year_sel = str(year_selected)
+                print('here2', year_selected)
         else:
-            year_selected = 0
-            str_year_sel = '0'
-
-    current_datetime = datetime.datetime.utcnow()
-
+            year_selected = int(earlier_year)
+            str_year_sel = str(earlier_year)
+        # once the inputs work this variable will be what the user selects on the year selection
+    yr_include = set(yr_include)
+    yr_include = list(yr_include)
+    print(yr_include, year_selected, year_list)
     return render_template('news.html', news=news_db, current_year=current_year, year_list=year_list,
                            current_datetime=current_datetime, year_selected=year_selected, str_year_sel=str_year_sel,
                            title='News', yr_include=yr_include)
@@ -281,14 +306,17 @@ def update_event(event_id):
     event = Event.query.get_or_404(event_id)
     form = EventForm()
     if form.validate_on_submit():
-        event_date_obj = datetime.datetime.strptime(str(form.event_date.data) + ' ' + str(form.event_time.date),
+        event_date_obj = datetime.datetime.strptime(str(form.event_date.data) + ' ' + str(form.event_time.data),
                                                    '%Y-%m-%d %H:%M:%S')
-        event_end_date_obj = datetime.datetime.strptime(str(form.event_end_date.data) + ' ' + str(form.event_end_time.date),
+        if form.event_end_date.data and form.event_end_time.data:
+            event_end_date_obj = datetime.datetime.strptime(str(form.event_end_date.data) + ' ' + str(form.event_end_time.data),
                                                     '%Y-%m-%d %H:%M:%S')
+            event.event_end = event_end_date_obj
+
         event.title = form.title.data
         event.content = form.content.data
         event.event_date = event_date_obj
-        event.event_end = event_end_date_obj
+
         # here we set the value of things already in the database, so we don't need a db.session.add
         # only to commit the changes
         db.session.commit()
@@ -329,10 +357,12 @@ def update_news(news_id):
     news = News.query.get_or_404(news_id)
     form = NewsForm()
     if form.validate_on_submit():
-        news_date_obj = datetime.datetime.strptime(str(form.start_date.data) + ' ' + str(form.start_time.date), '%Y-%m-%d %H:%M:%S')
+        if form.start_date.data and form.start_time.data:
+            news_date_obj = datetime.datetime.strptime(str(form.start_date.data) + ' ' + str(form.start_time.data), '%Y-%m-%d %H:%M:%S')
+            news.news_date = news_date_obj
         news.title = form.title.data
         news.content = form.content.data
-        news.news_date = news_date_obj
+
         # here we set the value of things already in the database, so we don't need a db.session.add
         # only to commit the changes
         db.session.commit()

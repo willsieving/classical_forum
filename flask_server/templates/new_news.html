@@ -39,6 +39,7 @@
                 {% endif %}
 
             </div>
+
             <div class="form-group">
                 {{ form.picture.label() }}
                 {{ form.picture(class="form-control-file") }}
@@ -48,6 +49,7 @@
                     {% endfor %}
                 {% endif %}
             </div>
+            Default date, if none entered, is date of posting.
             <div class="form-group">
                 {{ form.start_date.label(class="form-control-label") }}
 

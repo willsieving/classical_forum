@@ -25,12 +25,25 @@ body, html {
 
 .dropdown-menu > li > a:hover {
     background-image: none;
-    background-color: rgba(81, 66, 66, 0.9);
+    background: rgba(42, 60, 84, 0.9);
+
+}
+
+.dropdown-item {
+  padding: 0rem
+}
+
+a.wide {
+    display:block;
     width: 100%;
+    padding-left: 0rem;
+    padding-bottom: .25rem;
+    padding-top: .25rem;
+    padding-right: 0rem;
 }
 
 .event-text {
-   color: #014159;
+   color: #023245;
 }
 
 .btn.active {
@@ -180,7 +193,7 @@ body, html {
 }
 
 .bg-steel {
-  background: rgba(95, 76, 76, 0.9);
+  background: rgba(42, 60, 84, 0.8);
 
 }
 

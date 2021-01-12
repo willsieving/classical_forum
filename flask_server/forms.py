@@ -8,12 +8,12 @@ from wtforms.fields.html5 import EmailField, DateField, TimeField
 class EventForm(FlaskForm):
     # this is the form for creating a new event
     # all the boxes correspond to a column in the 'Event' table
-    title = StringField('Event Title', validators=[DataRequired()])
-    event_date = DateField(validators=[DataRequired()])
-    event_time = TimeField(validators=[DataRequired()])
-    event_end_date = DateField(validators=[Optional()])
-    event_end_time = TimeField(validators=[Optional()])
-    content = TextAreaField('Event Description', validators=[DataRequired()])
+    title = StringField('Event Title (Required)', validators=[DataRequired()])
+    event_date = DateField('Event Date (Required)', validators=[DataRequired()])
+    event_time = TimeField('Event Time (Required)', validators=[DataRequired()])
+    event_end_date = DateField('Event End Date (Optional)', validators=[Optional()])
+    event_end_time = TimeField('Event End Time (Optional)', validators=[Optional()])
+    content = TextAreaField('Event Description (Required)', validators=[DataRequired()])
     submit = SubmitField('Submit')
 
 
@@ -21,9 +21,9 @@ class NewsForm(FlaskForm):
     # this is the form for creating a new event
     # all the boxes correspond to a column in the 'Event' table
     title = StringField('News Headline (Required)', validators=[DataRequired()])
-    start_date = DateField(validators=[Optional()])
-    start_time = TimeField(validators=[Optional()])
-    picture = FileField('Update Profile Picture (Optional)', validators=[FileAllowed(['jpg', 'png']), Optional()])
+    start_date = DateField('Date Created (Optional)', validators=[Optional()])
+    start_time = TimeField('Time Created (Optional)', validators=[Optional()])
+    picture = FileField('Update Picture (Optional)', validators=[FileAllowed(['jpg', 'png']), Optional()])
     content = TextAreaField('Event Description (Required)', validators=[DataRequired()])
     submit = SubmitField('Submit')
 
