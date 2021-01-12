@@ -384,11 +384,17 @@ def update_news(news_id):
 @login_required
 def delete_news(news_id):
     news = News.query.get_or_404(news_id)
-
+    filename = news.image_file
     db.session.delete(news)
     # deleting the post from the database
     db.session.commit()
     # committing the changes
+    cwd = os.getcwd()
+    path_to_file = f'{cwd}\\flask_server\static\\news_pictures\{filename}'
+    print(path_to_file)
+    if os.path.exists(path_to_file):
+        os.remove(path_to_file)
+        print('here')
     flash('Your post has been deleted!', 'success')
     # flashing a success message
     return redirect(url_for('main.home'))
@@ -418,14 +424,8 @@ def new_news():
             i = Image.open(picture_file)
             width, height = i.size  # Get dimensions
             output_size_page = [width, height]
-            left = (width - 400) / 2
-            top = (height - 100) / 2
-            right = (width + 400) / 2
-            bottom = (height + 100) / 2
-            i2 = i.crop([left, top, right, bottom])
             i3 = i.resize(output_size_page)
-            i2.save(os.path.join(image_dir, pic_filename))
-            i3.save(os.path.join(image_dir, '1'+pic_filename))
+            i3.save(os.path.join(image_dir, pic_filename))
         else:
             pic_filename = None
         if form.start_date.data and form.start_time.data:
