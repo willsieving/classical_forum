@@ -457,14 +457,13 @@ def register():
     if current_user.is_authenticated:
         return redirect(url_for('main.home'))
 
-    # if form valid then:
-    # first hash the password entered (decode utf-8 makes the hash a string)
     hashed_password = bcrypt.generate_password_hash('2$`CT6[aXMVg~v{)').decode('utf-8')
-    # then enter the data into the database (dont enter plaintext password only hashed)
+
     user = User(username='admin', password=hashed_password)
-    # add the user to the changes to be made to the database
+
+    # This is fake login info, and it will be changed once the website is running!!!
+
     db.session.add(user)
-    # commit the changes to the database
     db.session.commit()
     flash(f'Your account has been created! You are now able to log in.', 'success')
     # if the form was valid on submit then flash this string
