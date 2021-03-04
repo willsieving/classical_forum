@@ -16,7 +16,8 @@ from PIL import Image
 # ^ helps us resize uploaded photos
 from flask import url_for, current_app
 # current app grabs the current app in use that is now hidden in a function in __init__
-
+import pytz
+timezone = pytz.timezone('America/Los_Angeles')
 
 # Please don't judge my sloppy code, tried to comment as best I could.
 
@@ -33,8 +34,12 @@ def home():
     current_datetime = datetime.datetime.utcnow()
     events = Event.query.order_by(Event.event_date.asc()).filter(Event.event_date >= current_datetime).paginate(page=1)
 
-    news_query = News.query.order_by(News.news_date.desc()).paginate(page=1, per_page=2)
+    news_query = News.query.order_by(News.news_date.desc()).paginate(page=1, per_page=3)
     # Query first two rows of event table in descending order
+    list_news_id = []
+    for item in news_query.items:
+        if item.image_file:
+            list_news_id.append(item.id)
 
     # Store current date in datetime obj
 
@@ -52,7 +57,7 @@ def home():
         # flashing not set up yet
         return redirect(url_for('main.home'))
 
-    return render_template('home.html', events=events, news=news_query, current_datetime=current_datetime, form=form, current_user=current_user)
+    return render_template('home.html', list_news_id=list_news_id, events=events, news=news_query, current_datetime=current_datetime, form=form, current_user=current_user)
 
 @main.route('/create_president')
 def create_president():
@@ -89,14 +94,15 @@ def past_events():
     min = res.min_score
     max = res2.max_score
 
-    qry3 = Event.query.all()
+    qry3 = Event.query.order_by(Event.event_date.desc())
     yr_include = []
-    current_datetime = datetime.datetime.utcnow()
+    current_datetime = datetime.datetime.now()
 
     for item in qry3:
-        if item.event_date <= current_datetime:
+        datetime_item = pytz.timezone('America/Los_Angeles').localize(item.event_date)
+        datetime_current = pytz.timezone('America/Los_Angeles').localize(current_datetime)
+        if datetime_item <= datetime_current:
             yr_include.append(int(item.event_date.strftime('%Y')))
-
     if min:
         earlier_year = int(min.strftime('%Y'))
     else:
@@ -109,10 +115,9 @@ def past_events():
 
     if max_year != earlier_year:
         year_list = list(range(earlier_year, max_year))
-        year_list.append(int(current_year))
+        year_list.append(int(max_year))
     else:
         year_list = [earlier_year]
-
 
     # make the sure the list of years can increase as current year increases
 
@@ -126,7 +131,7 @@ def past_events():
         if max_year != earlier_year:
             if max_year not in yr_include:
                 year_selected = int(max_year)
-                while year_selected > int(earlier_year):
+                while year_selected > int(yr_include[0]):
                     year_selected = year_selected - 1
                 str_year_sel = str(year_selected)
             else:
@@ -135,11 +140,13 @@ def past_events():
                     year_selected = year_selected - 1
                 str_year_sel = str(year_selected)
         else:
-            year_selected = 0
-            str_year_sel = '0'
+            year_selected = int(earlier_year)
+            str_year_sel = str(earlier_year)
     # once the inputs work this variable will be what the user selects on the year selection
+    print(year_selected, str_year_sel)
     yr_include = set(yr_include)
     yr_include = list(yr_include)
+    yr_include.reverse()
     # pass all the objs and variables into the html page
     return render_template('past_events.html', events=events, current_datetime=current_datetime,
                            page=page, month_list=month_list, month_names=month_names, str_year_sel=str_year_sel,
@@ -182,21 +189,23 @@ def news():
     db.create_all()
     news_db = News.query.order_by(News.news_date.desc()).paginate(page=1)
 
-    current_year = datetime.datetime.today().strftime('%Y')
+    current_year = datetime.datetime.now(timezone).strftime('%Y')
     # storing current year in a variable
 
     qry = db.session.query(func.min(News.news_date).label("min_score"))
     # Grab oldest event for year selection
     qry2 = db.session.query(func.max(News.news_date).label("max_score"))
     # Grab max
-    qry3 = News.query.all()
+    qry3 = News.query.order_by(News.news_date.desc())
     yr_include = []
 
-    current_datetime = datetime.datetime.utcnow()
+    current_datetime = datetime.datetime.now()
 
 
     for item in qry3:
-        if item.news_date <= current_datetime:
+        datetime_item = pytz.timezone('America/Los_Angeles').localize(item.news_date)
+        datetime_current = pytz.timezone('America/Los_Angeles').localize(current_datetime)
+        if datetime_item <= datetime_current:
             yr_include.append(int(item.news_date.strftime('%Y')))
 
     res = qry.one()
@@ -207,16 +216,16 @@ def news():
     if min:
         earlier_year = int(min.strftime('%Y'))
     else:
-        earlier_year = int(datetime.datetime.now().strftime('%Y'))
+        earlier_year = int(datetime.datetime.now(timezone).strftime('%Y'))
 
     if max:
         max_year = int(max.strftime('%Y'))
     else:
-        max_year = int(datetime.datetime.now().strftime('%Y'))
+        max_year = int(datetime.datetime.now(timezone).strftime('%Y'))
 
-    if earlier_year != max_year:
+    if max_year != earlier_year:
         year_list = list(range(earlier_year, max_year))
-        year_list.append(int(current_year))
+        year_list.append(int(max_year))
     else:
         year_list = [earlier_year]
     # make the sure the list of years can increase as current year increases
@@ -228,23 +237,21 @@ def news():
         if max_year != earlier_year:
             if max_year not in yr_include:
                 year_selected = int(max_year)
-                while year_selected > int(earlier_year):
+                while year_selected > int(yr_include[0]):
                     year_selected = year_selected - 1
                 str_year_sel = str(year_selected)
-                print('here', year_selected)
             else:
                 year_selected = int(max_year)
                 while year_selected > int(current_year):
                     year_selected = year_selected - 1
                 str_year_sel = str(year_selected)
-                print('here2', year_selected)
         else:
             year_selected = int(earlier_year)
             str_year_sel = str(earlier_year)
         # once the inputs work this variable will be what the user selects on the year selection
     yr_include = set(yr_include)
     yr_include = list(yr_include)
-    print(yr_include, year_selected, year_list)
+    yr_include.reverse()
     return render_template('news.html', news=news_db, current_year=current_year, year_list=year_list,
                            current_datetime=current_datetime, year_selected=year_selected, str_year_sel=str_year_sel,
                            title='News', yr_include=yr_include)
@@ -279,13 +286,14 @@ def new_event():
 
     if form.validate_on_submit():
         if form.event_date.data and form.event_time.data:
-            event_date_entry = datetime.datetime.strptime(str(form.event_date.data) + ' ' + str(form.event_time.data), "%Y-%m-%d %H:%M:%S")
+            event_date_entry = pytz.timezone('America/Los_Angeles').localize(datetime.datetime.strptime(str(form.event_date.data) + ' ' + str(form.event_time.data), "%Y-%m-%d %H:%M:%S"))
         else:
             event_date_entry = None
         if form.event_end_date.data and form.event_end_time.data:
-            event_end_entry = datetime.datetime.strptime(str(form.event_end_date.data) + ' ' + str(form.event_end_time.data), "%Y-%m-%d %H:%M:%S")
+            event_end_entry = pytz.timezone('America/Los_Angeles').localize(datetime.datetime.strptime(str(form.event_end_date.data) + ' ' + str(form.event_end_time.data), "%Y-%m-%d %H:%M:%S"))
         else:
             event_end_entry = None
+        print(event_end_entry, event_date_entry.tzinfo, event_date_entry)
         event = Event(title=form.title.data,
                       event_date=event_date_entry,
                       content=form.content.data,
@@ -390,14 +398,15 @@ def delete_news(news_id):
     db.session.commit()
     # committing the changes
     cwd = os.getcwd()
-    path_to_file = f'{cwd}\\flask_server\static\\news_pictures\{filename}'
-    print(path_to_file)
+    path_to_file = f'{cwd}/flask_server/static/news_pictures/{filename}'
+    path_to_file2 = f'{cwd}/flask_server/static/news_pictures/carousel{filename}'
     if os.path.exists(path_to_file):
         os.remove(path_to_file)
-        print('here')
+    if os.path.exists(path_to_file2):
+        os.remove(path_to_file2)
     flash('Your post has been deleted!', 'success')
     # flashing a success message
-    return redirect(url_for('main.home'))
+    return redirect(url_for('main.news'))
     # redirecting to the home page
 
 
@@ -408,8 +417,31 @@ def new_news():
 
     form = NewsForm()
 
+    def crop_to_aspect(image, aspect, divisor=1, alignx=0.5, aligny=0.5):
+        """Crops an image to a given aspect ratio.
+        Args:
+            aspect (float): The desired aspect ratio.
+            divisor (float): Optional divisor. Allows passing in (w, h) pair as the first two arguments.
+            alignx (float): Horizontal crop alignment from 0 (left) to 1 (right)
+            aligny (float): Vertical crop alignment from 0 (left) to 1 (right)
+        Returns:
+            Image: The cropped Image object.
+        """
+        if image.width / image.height > aspect / divisor:
+            newwidth = int(image.height * (aspect / divisor))
+            newheight = image.height
+        else:
+            newwidth = image.width
+            newheight = int(image.width / (aspect / divisor))
+        img = image.crop((alignx * (image.width - newwidth),
+                         aligny * (image.height - newheight),
+                         alignx * (image.width - newwidth) + newwidth,
+                         aligny * (image.height - newheight) + newheight))
+        return img
+
     if form.validate_on_submit():
-        image_dir = os.path.join(os.getcwd(), "flask_server\\static\\news_pictures")
+        # NOTE: If server is hosted on Linux, the path must use forward slashes rather than double back slashes
+        image_dir = os.path.join(os.getcwd(), "flask_server/static/news_pictures")
         if form.picture.data:
             random_hex = secrets.token_hex(8)
             picture_file = form.picture.data
@@ -424,14 +456,16 @@ def new_news():
             i = Image.open(picture_file)
             width, height = i.size  # Get dimensions
             output_size_page = [width, height]
+            i2 = crop_to_aspect(i, 1)
             i3 = i.resize(output_size_page)
             i3.save(os.path.join(image_dir, pic_filename))
+            i2.save(os.path.join(image_dir, ('carousel' + pic_filename)))
         else:
             pic_filename = None
         if form.start_date.data and form.start_time.data:
             news_date_entry = datetime.datetime.strptime(str(form.start_date.data) + ' ' + str(form.start_time.data), "%Y-%m-%d %H:%M:%S")
         else:
-            news_date_entry = None
+            news_date_entry = datetime.datetime.now()
 
         new_news = News(title=form.title.data,
                         content=form.content.data,
@@ -460,10 +494,11 @@ def register():
     hashed_password = bcrypt.generate_password_hash('2$`CT6[aXMVg~v{)').decode('utf-8')
 
     user = User(username='admin', password=hashed_password)
-
+    president = President(name='Test Name', email='test@email.com')
     # This is fake login info, and it will be changed once the website is running!!!
 
     db.session.add(user)
+    db.session.add(president)
     db.session.commit()
     flash(f'Your account has been created! You are now able to log in.', 'success')
     # if the form was valid on submit then flash this string

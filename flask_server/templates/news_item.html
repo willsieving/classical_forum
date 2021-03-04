@@ -26,7 +26,7 @@
 
             <div class="col">
                 <div class="row">
-                {% if news.image_file != 'news.png' %}
+                {% if news.image_file %}
                     <img class="align-center rounded align-center shadow-sm" style="max-height: 400px; max-width: 70%; display: block; margin-left: auto; margin-right: auto;" src="{{ url_for('static', filename='news_pictures/' + news.image_file) }}">
                 {% endif %}
                     <div class="col-sm shadow-sm content-section" style="margin-top: 0px; margin-left: 5px">

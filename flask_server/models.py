@@ -2,6 +2,8 @@ from flask_server import db, login_manager
 import datetime
 # using datetime as a type of column
 from flask_login import UserMixin
+import pytz
+timezone = pytz.timezone('America/Los_Angeles')
 
 # this gets a user's ID
 @login_manager.user_loader
@@ -23,10 +25,10 @@ class User(db.Model, UserMixin):
 
     id = db.Column(db.Integer, primary_key=True)
     # each user gets a unique ID to identify them
-    username = db.Column(db.String(20), unique=True, nullable=False)
+    username = db.Column(db.String(), unique=True, nullable=False)
     # everyone must have a username, and no one can have the same username as another (same with email)
 
-    password = db.Column(db.String(60), nullable=False)
+    password = db.Column(db.String(), nullable=False)
 
 class Event(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -47,9 +49,9 @@ class News(db.Model):
     id = db.Column(db.Integer, primary_key=True)
 
     title = db.Column(db.String(100), nullable=False)
-    news_date = db.Column(db.DateTime, nullable=False, default=datetime.datetime.utcnow())
+    news_date = db.Column(db.DateTime, nullable=False, default=pytz.timezone('America/Los_Angeles').localize(datetime.datetime.now()))
 
-    image_file = db.Column(db.String(20), default='news.png')
+    image_file = db.Column(db.String(20))
 
     content = db.Column(db.Text, nullable=False)
 

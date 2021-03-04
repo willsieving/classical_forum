@@ -61,7 +61,7 @@
 
 <div class="shadow-sm rounded-left container" style="background-color: rgba(255,254,252,0.8); margin-top: 2%; max-width: 74.5%; min-width: 20%">
   <div class="col" style="margin: 3%">
-    <div class="row" style="width: 90%">
+    <div class="" style="width: 90%">
 
               {% for item in news.items %}
               <!-- have to find a way to get access to what year is currently selected --->
@@ -73,14 +73,13 @@
                             <div class="vl2 rounded" style="margin-bottom: 3%; margin-top: 3%"></div>
                             <div class="col" style="margin-top: -1%">
                                 <a class="bold nounderline" style="color: #035c7e; font-size: 1.25rem; line-height: 1.2; display: inline-block" href="{{ url_for('main.news_item', news_id=item.id) }}">{{ item.title }}</a>
-                                <a class="" style="color: #035c7e; font-size: 1.25rem; line-height: 1.2; margin-left: 20px;">{{ item.news_date.strftime('%B %d - %I:%M %p') }}</a>
+                                <a class="" style="color: #035c7e; font-size: 1.25rem; line-height: 1.2; margin-left: 20px;">{{ item.news_date.strftime('%B %d, %I:%M %p') }}</a>
                                 <p class="line-clamp" style="margin-top: 1%; margin-bottom: 3%">
                                     {{ item.content }}
                                 </p>
                             </div>
                         </div>
                 {% endif %}
-
               {% endfor %}
     </div>
   </div>
